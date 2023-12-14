@@ -2,6 +2,7 @@ from random import shuffle
 
 suits = ["S", "H", "D", "C"]
 ranks = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
+scores = [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
 
 class Card:
 
@@ -40,11 +41,11 @@ def royal_straight_flash(d_cards):
 
 def create_pairs(d_cards):
    r = []
-   for rank in ranks:
+   for score, rank in zip(scores, ranks):
       n = d_cards.count(rank)
       if n > 1:
-         r += [(n, rank)]
-   return sorted(r)
+         r += [(n, score)]
+   return sorted(r, key=lambda x:(x[0], x[1]), reverse=True)
 
 def straight_flash(d_cards):
    req_cards = ranks + ["A"]
@@ -75,9 +76,9 @@ def all_in(d_cards, req_cards):
          return 0
    return score(req_cards)
 
-def score(s, m=""):
-   for score, rank in zip([14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2], ranks):
-      if s.count(rank + m) in s:
+def score(d_cards, m=""):
+   for score, rank in zip(scores, ranks):
+      if rank.count(m + rank) in d_cards:
          return score
       return 0
 
@@ -107,13 +108,13 @@ def cards_score(d_cards):
       return 500 + score
    #スリーカード
    if pairs[0][0] == 3:
-      return 400 + int(pairs[0][1])
+      return 400 + pairs[0][1], pairs
    #ツーペア
    if len(pairs)>2:
-      return 300 + int(pairs[0][1])
+      return 300 + pairs[0][1], pairs
    #ワンペア
    if len(pairs)>1:
-      return 200 + int(pairs[0][1])
+      return 200 + pairs[0][1], pairs
    #ハイカード
    return score(d_cards)
       
