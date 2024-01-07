@@ -2,7 +2,6 @@
 テキサスホールデム役判定プログラム(カードは1組[52枚]想定)
 TODO:ゲームの進行をマネジメントするプログラム, CPUの行動アルゴリズム(bet額設定のアルゴリズム),  オンライン機能の追加, ログイン機能の追加
 """
-
 from random import shuffle
 
 # トランプのマーク：右からスペード、ハート、ダイヤ、クラブ
@@ -133,11 +132,12 @@ def cards_score(d_cards):
       return ["ストレートフラッシュ", 900 + score]
    #フォーカード
    if pairs[0][0] == 4:
-      return ["フォーカード", 800 + pairs[0][1]]
+      d_cards = [x for x in d_cards if checkrank[pairs[0][1]] not in x]
+      return (["フォーカード", 800 + pairs[0][1]] + create_kickers(d_cards))[:3]
    #フルハウス
    if pairs[0][0] == 3:
       if len(pairs) > 2:
-         return ["フルハウス", 700 + pairs[0][1]]
+         return ["フルハウス", 700 + pairs[0][1], 700 + pairs[1][1]]
    #フラッシュ
    if flash(d_cards):
       result = ["フラッシュ"] + [x + 600 for x in flash(d_cards)]
@@ -148,7 +148,8 @@ def cards_score(d_cards):
       return ["ストレート", 500 + score]
    #スリーカード
    if pairs[0][0] == 3:
-      return ["スリーカード", 400 + pairs[0][1]]
+      d_cards = [x for x in d_cards if checkrank[pairs[0][1]] not in x]
+      return (["スリーカード", 400 + pairs[0][1]] + create_kickers(d_cards))[:4]
    #ツーペア
    if len(pairs) > 2:
       d_cards = [x for x in d_cards if (checkrank[pairs[0][1]] not in x) and (checkrank[pairs[1][1]] not in x)]
