@@ -1,3 +1,7 @@
+"""
+ポーカーのカード、デックの定義を行うプログラムです
+"""
+
 from random import shuffle
 
 # トランプのマーク：右からスペード、ハート、ダイヤ、クラブ
@@ -40,8 +44,8 @@ class Deck(list):
       shuffle(self)
 
    def deal(self, num):
-      r = []
+      dealcards = []
       for _ in range(num):
-         c = self.pop()
-         r.append(c.suit + c.rank)
-      return r
+         popcard = self.pop()
+         dealcards.append(popcard.suit + popcard.rank)
+      return dealcards
