@@ -1,9 +1,13 @@
+"""
+ポーカーの役判定を行うプログラム
+"""
+
 import card
 
 # ロイヤルストレートを判定する関数
 def royal_straight_flash(d_cards):
-   return check_req(d_cards, "SA SK SQ SJ ST") > 0 or check_req(d_cards, "HA HK HQ HJ HT") > 0\
-   or check_req(d_cards, "DA DK DQ DJ DT") > 0 or check_req(d_cards, "CA CK CQ CJ CT") > 0
+   return check_req(d_cards, ["SA", "SK", "SQ", "SJ", "ST"]) > 0 or check_req(d_cards, ["HA", "HK", "HQ", "HJ", "HT"]) > 0\
+   or check_req(d_cards, ["DA", "DK", "DQ", "DJ", "DT"]) > 0 or check_req(d_cards, ["CA", "CK", "CQ", "CJ", "CT"]) > 0
 
 # ペアを作成する関数
 def create_pairs(d_cards):
@@ -128,7 +132,6 @@ def test():
       
 if __name__ == "__main__":
    deck = card.Deck()
-   num = 2
    p1 = deck.deal(2)
    p2 = deck.deal(2)
    com = deck.deal(5)
