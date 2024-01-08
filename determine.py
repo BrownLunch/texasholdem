@@ -1,54 +1,4 @@
-"""
-テキサスホールデム役判定プログラム(カードは1組[52枚]想定)
-TODO:ゲームの進行をマネジメントするプログラム, CPUの行動アルゴリズム(bet額設定のアルゴリズム),  オンライン機能の追加, ログイン機能の追加
-"""
-from random import shuffle
-
-# トランプのマーク：右からスペード、ハート、ダイヤ、クラブ
-suits = ["S", "H", "D", "C"]
-
-# トランプの数字：右からA(エース)、K(キング)、Q(クイーン)、J(ジャック)、10, 9, 8, 7, 6, 5, 4, 3, 2)
-ranks = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
-
-# トランプの数字のスコア：Aが一番高く2が一番低い
-scores = [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
-
-# Cardクラスを作成
-class Card:
-
-   def __init__(self, suit, rank):
-      self.__suit = suit
-      self.__rank = rank
-   
-   def __str__(self):
-      return f"{self.__suit}{self.__rank}"
-   
-   @property
-   def suit(self):
-      return self.__suit
-   
-   @property
-   def rank(self):
-      return self.__rank
-
-# CardクラスからDeckクラスを作成  
-class Deck(list):
-
-   def __init__(self):
-      super().__init__(
-         Card(suit, rank) for suit in suits for rank in ranks
-      )
-      self.shuffle()
-
-   def shuffle(self):
-      shuffle(self)
-
-   def deal(self, num):
-      r = []
-      for _ in range(num):
-         c = self.pop()
-         r.append(c.suit + c.rank)
-      return r
+import card
 
 # ロイヤルストレートを判定する関数
 def royal_straight_flash(d_cards):
@@ -58,7 +8,7 @@ def royal_straight_flash(d_cards):
 # ペアを作成する関数
 def create_pairs(d_cards):
    pairs = []
-   for score, rank in zip(scores, ranks):
+   for score, rank in zip(card.scores, card.ranks):
       n = " ".join(d_cards).count(rank)
       if n > 1:
          pairs += [(n, score)]
@@ -67,7 +17,7 @@ def create_pairs(d_cards):
 # キッカーを作成する関数
 def create_kickers(d_cards, suit=""):
    kickers = []
-   for score, rank in zip(scores, ranks):
+   for score, rank in zip(card.scores, card.ranks):
       if " ".join(d_cards).count(suit + rank) > 0:
          kickers.append(score)
    return kickers
@@ -75,20 +25,20 @@ def create_kickers(d_cards, suit=""):
 #ストレートフラッシュを判定する関数
 def straight_flash(d_cards):
    for i in range(9):
-      for suit in suits:
-         score = check_req(d_cards, [suit + rank for suit, rank in zip(suit*5, ranks[i:i + 5])])
+      for suit in card.suits:
+         score = check_req(d_cards, [suit + rank for suit, rank in zip(suit*5, card.ranks[i:i + 5])])
          if score > 0:       
             return score
    else:
-      for suit in suits:
-         if check_req(d_cards, [suit + rank for suit, rank in zip(suit*5, ranks[-4:] + ranks[:1])]) > 0:
+      for suit in card.suits:
+         if check_req(d_cards, [suit + rank for suit, rank in zip(suit*5, card.ranks[-4:] + card.ranks[:1])]) > 0:
             return 5
       else:
          return 0
   
 #フラッシュを判定する関数
 def flash(d_cards):
-   for suit in suits:
+   for suit in card.suits:
       if " ".join(d_cards).count(suit) > 4:
          return create_kickers(d_cards, suit)
    return 0
@@ -96,11 +46,11 @@ def flash(d_cards):
 #ストレートを判定する関数
 def straight(d_cards):
    for i in range(9):
-      score = check_req(d_cards, ranks[i: i + 5])
+      score = check_req(d_cards, card.ranks[i: i + 5])
       if score > 0:
          return score
    else:
-      if check_req(d_cards, ranks[-4:] + ranks[:1]) > 0:
+      if check_req(d_cards, card.ranks[-4:] + card.ranks[:1]) > 0:
          return 5
       else:
          return 0
@@ -114,7 +64,7 @@ def check_req(d_cards, req_cards):
 
 # スコアを計算する関数
 def cal_score(cal_cards, suit=""):
-   for score, rank in zip(scores, ranks):
+   for score, rank in zip(card.scores, card.ranks):
       if " ".join(cal_cards).count(suit + rank) > 0:
          return score
    return 0
@@ -122,7 +72,7 @@ def cal_score(cal_cards, suit=""):
 #引数に入れられたカードの役とスコアを返す関数
 def cards_score(d_cards):
    pairs = create_pairs(d_cards) + [(0, 0)]
-   checkrank = dict(zip(scores, ranks))
+   parserank = dict(zip(card.scores, card.ranks))
    #ロイヤルストレートフラッシュ
    if royal_straight_flash(d_cards): 
       return ["ロイヤルストレートフラッシュ", 1000]
@@ -132,7 +82,7 @@ def cards_score(d_cards):
       return ["ストレートフラッシュ", 900 + score]
    #フォーカード
    if pairs[0][0] == 4:
-      d_cards = [x for x in d_cards if checkrank[pairs[0][1]] not in x]
+      d_cards = [x for x in d_cards if parserank[pairs[0][1]] not in x]
       return (["フォーカード", 800 + pairs[0][1]] + create_kickers(d_cards))[:3]
    #フルハウス
    if pairs[0][0] == 3:
@@ -148,15 +98,15 @@ def cards_score(d_cards):
       return ["ストレート", 500 + score]
    #スリーカード
    if pairs[0][0] == 3:
-      d_cards = [x for x in d_cards if checkrank[pairs[0][1]] not in x]
+      d_cards = [x for x in d_cards if parserank[pairs[0][1]] not in x]
       return (["スリーカード", 400 + pairs[0][1]] + create_kickers(d_cards))[:4]
    #ツーペア
    if len(pairs) > 2:
-      d_cards = [x for x in d_cards if (checkrank[pairs[0][1]] not in x) and (checkrank[pairs[1][1]] not in x)]
+      d_cards = [x for x in d_cards if (parserank[pairs[0][1]] not in x) and (parserank[pairs[1][1]] not in x)]
       return (["ツーペア", 300 + pairs[0][1], 300 + pairs[1][1]] + create_kickers(d_cards))[:4]
    #ワンペア
    if len(pairs) > 1:
-      d_cards = [x for x in d_cards if checkrank[pairs[0][1]] not in x]
+      d_cards = [x for x in d_cards if parserank[pairs[0][1]] not in x]
       return (["ワンペア", 200 + pairs[0][1]] + create_kickers(d_cards))[:5]
    #ハイカード  
    return (["ハイカード"] + create_kickers(d_cards))[:6]
@@ -177,16 +127,15 @@ def test():
 
       
 if __name__ == "__main__":
-   # deck = Deck()
-   # num = 2
-   # p1 = deck.deal(2)
-   # p2 = deck.deal(2)
-   # com = deck.deal(5)
-   # print(p1 + com, cards_score(p1 + com))
-   # print(p2 + com, cards_score(p2 + com))
-   # if cards_score(p1 + com)[1] > cards_score(p2 + com)[1]:
-   #    print("プレイヤー１の勝利")
-   # else:
-   #    print("プレイヤー２の勝利")
-   test()
-  
+   deck = card.Deck()
+   num = 2
+   p1 = deck.deal(2)
+   p2 = deck.deal(2)
+   com = deck.deal(5)
+   print(p1 + com, cards_score(p1 + com))
+   print(p2 + com, cards_score(p2 + com))
+   if cards_score(p1 + com)[1] > cards_score(p2 + com)[1]:
+      print("プレイヤー１の勝利")
+   else:
+      print("プレイヤー２の勝利")
+   # test()
