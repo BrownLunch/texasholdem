@@ -1,25 +1,60 @@
-def game():
-    prefrop()
-    frop()
-    turn()
-    river()
-    showdown()
+"""
+ポーカーのカード、デックの定義を行うプログラムです
+"""
 
-def betting_round():
-    pass
+from random import shuffle
 
-def prefrop():
-    betting_round()
+# トランプのマーク：右からスペード、ハート、ダイヤ、クラブ
+suits = ["S", "H", "D", "C"]
 
-def frop():
-    betting_round()
+# トランプの数字：右からA(エース)、K(キング)、Q(クイーン)、J(ジャック)、10, 9, 8, 7, 6, 5, 4, 3, 2)
+ranks = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
 
-def turn():
-    betting_round()
+# トランプの数字のスコア：Aが一番高く2が一番低い
+scores = [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2]
 
-def river():
-    betting_round()
+# Cardクラスを作成
+class Card:
 
-def showdown():
-    # 
-    pass
+   def __init__(self, suit, rank):
+      self.__suit = suit
+      self.__rank = rank
+   
+   def __str__(self):
+      return f"{self.__suit}{self.__rank}"
+   
+   @property
+   def suit(self):
+      return self.__suit
+   
+   @property
+   def rank(self):
+      return self.__rank
+
+# CardクラスからDeckクラスを作成  
+class Deck(list):
+
+   def __init__(self):
+      super().__init__(
+         Card(suit, rank) for suit in suits for rank in ranks
+      )
+      self.shuffle()
+
+   def shuffle(self):
+      shuffle(self)
+
+   def deal(self, num):
+      dealcards = []
+      for _ in range(num):
+         popcard = self.pop()
+         dealcards.append(popcard.suit + popcard.rank)
+      return dealcards
+   
+class Player:
+    def __init__(self, name, stack):
+        self.name = name
+        self.stack = stack
+        self.hand = []
+
+class Table:
+   pass
