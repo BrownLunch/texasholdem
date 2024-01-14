@@ -1,7 +1,7 @@
 """
 ポーカーの役判定を行うプログラム
 """
-from texasholdem import scores, ranks, suits, Deck
+from texasholdem import Deck
 
 # ロイヤルストレートを判定する関数
 def royal_straight_flash(d_cards):
@@ -11,7 +11,7 @@ def royal_straight_flash(d_cards):
 # ペアを作成する関数
 def create_pairs(d_cards):
    pairs = []
-   for score, rank in zip(scores, ranks):
+   for score, rank in zip(Deck.scores, Deck.ranks):
       n = " ".join(d_cards).count(rank)
       if n > 1:
          pairs += [(n, score)]
@@ -20,7 +20,7 @@ def create_pairs(d_cards):
 # キッカーを作成する関数
 def create_kickers(d_cards, suit=""):
    kickers = []
-   for score, rank in zip(scores, ranks):
+   for score, rank in zip(Deck.scores, Deck.ranks):
       if " ".join(d_cards).count(suit + rank) > 0:
          kickers.append(score)
    return kickers
@@ -28,20 +28,20 @@ def create_kickers(d_cards, suit=""):
 #ストレートフラッシュを判定する関数
 def straight_flash(d_cards):
    for i in range(9):
-      for suit in suits:
-         score = check_req(d_cards, [suit + rank for suit, rank in zip(suit*5, ranks[i:i + 5])])
+      for suit in Deck.suits:
+         score = check_req(d_cards, [suit + rank for suit, rank in zip(suit*5, Deck.ranks[i:i + 5])])
          if score > 0:       
             return score
    else:
-      for suit in suits:
-         if check_req(d_cards, [suit + rank for suit, rank in zip(suit*5, ranks[-4:] + ranks[:1])]) > 0:
+      for suit in Deck.suits:
+         if check_req(d_cards, [suit + rank for suit, rank in zip(suit*5, Deck.ranks[-4:] + Deck.ranks[:1])]) > 0:
             return 5
       else:
          return 0
   
 #フラッシュを判定する関数
 def flash(d_cards):
-   for suit in suits:
+   for suit in Deck.suits:
       if " ".join(d_cards).count(suit) > 4:
          return create_kickers(d_cards, suit)
    return 0
@@ -49,11 +49,11 @@ def flash(d_cards):
 #ストレートを判定する関数
 def straight(d_cards):
    for i in range(9):
-      score = check_req(d_cards, ranks[i: i + 5])
+      score = check_req(d_cards, Deck.ranks[i: i + 5])
       if score > 0:
          return score
    else:
-      if check_req(d_cards, ranks[-4:] + ranks[:1]) > 0:
+      if check_req(d_cards, Deck.ranks[-4:] + Deck.ranks[:1]) > 0:
          return 5
       else:
          return 0
@@ -67,7 +67,7 @@ def check_req(d_cards, req_cards):
 
 # スコアを計算する関数
 def cal_score(cal_cards, suit=""):
-   for score, rank in zip(scores, ranks):
+   for score, rank in zip(Deck.scores, Deck.ranks):
       if " ".join(cal_cards).count(suit + rank) > 0:
          return score
    return 0
@@ -75,7 +75,7 @@ def cal_score(cal_cards, suit=""):
 #引数に入れられたカードの役とスコアを返す関数
 def cards_score(d_cards):
    pairs = create_pairs(d_cards) + [(0, 0)]
-   parserank = dict(zip(scores, ranks))
+   parserank = dict(zip(Deck.scores, Deck.ranks))
    #ロイヤルストレートフラッシュ
    if royal_straight_flash(d_cards): 
       return ["ロイヤルストレートフラッシュ", 1000]
