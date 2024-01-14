@@ -51,8 +51,9 @@ class Player:
         self.hand = []
 
 class Table:
-   def __init__(self, sb, bb):
+   def __init__(self, sb, bb, playerlimit):
       self.sb = sb
       self.bb = bb
-      self.pot = 0
+      self.playerlimit = playerlimit
+      self.pot = 0     
       self.players = []
