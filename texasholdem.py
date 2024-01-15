@@ -45,10 +45,12 @@ class Deck(list):
       return dealcards
    
 class Player:
-    def __init__(self, name, stack):
-        self.name = name
-        self.stack = stack
-        self.hand = []
+   def __init__(self, name, stack):
+      self.name = name
+      self.stack = stack
+      self.hand = []
+
+
 
 class Table:
    def __init__(self, sb, bb, playerlimit):
@@ -57,3 +59,12 @@ class Table:
       self.playerlimit = playerlimit
       self.pot = 0     
       self.players = []
+
+   def add_player():
+      pass
+
+   def start_game():
+      pass
+
+
+
