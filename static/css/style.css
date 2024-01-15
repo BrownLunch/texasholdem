@@ -3,7 +3,7 @@ body{
     height:100vh;
     background-image:url(../images/homebg.png);
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center;
     background-size: contain;
-    background-color: #0000;
+    overflow: hidden;
 }

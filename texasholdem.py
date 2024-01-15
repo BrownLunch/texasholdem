@@ -6,7 +6,6 @@ from random import shuffle
 
 # Cardクラスを作成
 class Card:
-
    def __init__(self, suit, rank):
       self.__suit = suit
       self.__rank = rank
@@ -37,31 +36,43 @@ class Deck(list):
    def shuffle(self):
       shuffle(self)
 
-   def deal(self, num):
+   def deal_hand(self, num):
       dealcards = []
       for _ in range(num):
          popcard = self.pop()
          dealcards.append(popcard.suit + popcard.rank)
       return dealcards
    
+   def deal_communitycard(self, num):
+      pass
+   
 class Player:
    def __init__(self, name, stack):
-      self.name = name
+      self.name = name      
       self.stack = stack
       self.hand = []
+      self.bet = 0
+      self.status = "Alive" #プレイヤーが対戦中かすでに負けているか(Alive, Defeted)を管理するプロパティ
+      self.action = "" #プレイヤーのアクション(call, raise, fold, allin, check)を管理するプロパティ
 
+   def receive_hand(self, dealtcards):
+      self.hand = dealtcards
 
+   def __str__(self):
+      return f"name:{self.name} stack:{self.stack} bet:{self.bet} status:{self.status}"
+      
 
 class Table:
    def __init__(self, sb, bb, playerlimit):
-      self.sb = sb
-      self.bb = bb
-      self.playerlimit = playerlimit
-      self.pot = 0     
-      self.players = []
+      self.sb = sb #テーブルのスモールブラインドを設定
+      self.bb = bb #テーブルのビッグブラインドを設定
+      self.playerlimit = playerlimit #人数上限を設定
+      self.pot = 0 #ポットを初期化    
+      self.players = [] #プレイヤー情報を格納する配列
 
-   def add_player():
-      pass
+   # テーブルにプレイヤーを追加するメソッド
+   def add_player(self, player):
+      self.players.append(player)
 
    def start_game():
       pass
