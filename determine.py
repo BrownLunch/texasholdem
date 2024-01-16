@@ -131,9 +131,9 @@ def test():
       
 if __name__ == "__main__":
    deck = Deck()
-   p1 = deck.deal(2)
-   p2 = deck.deal(2)
-   com = deck.deal(5)
+   p1 = deck.deal_hand(2)
+   p2 = deck.deal_hand(2)
+   com = deck.deal_hand(5)
    print(p1 + com, cards_score(p1 + com))
    print(p2 + com, cards_score(p2 + com))
    if cards_score(p1 + com)[1] > cards_score(p2 + com)[1]:

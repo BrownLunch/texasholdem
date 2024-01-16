@@ -43,7 +43,7 @@ class Deck(list):
          dealcards.append(popcard.suit + popcard.rank)
       return dealcards
    
-   def deal_communitycard(self, num):
+   def deal_community(self, num):
       pass
    
 class Player:
