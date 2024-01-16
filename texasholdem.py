@@ -74,8 +74,5 @@ class Table:
    def add_player(self, player):
       self.players.append(player)
 
-   def start_game():
-      pass
-
 
 

@@ -126,8 +126,6 @@ def test():
    print("ツーペア：", cards_score(["H2", "D3", "C2", "H5", "S3", "D5", "HK"]))
    print("ワンペア：", cards_score(["H2", "D3", "C2", "H5", "S9", "DT"]))
    print("ハイカード：", cards_score(["H2", "D8", "HA", "DT", "S3", "H9"]))
-
-
       
 if __name__ == "__main__":
    deck = Deck()
