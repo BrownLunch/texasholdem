@@ -8,8 +8,17 @@
     <title>NKPOKER</title>
 </head>
 <body>
-    <div class="bg">
-        
+    <div class="container">
+        <div class="left-container">
+        </div>
+        <div class="right-container">
+            <div class="btn-container">
+                <img class="btn" src="../static/images/rankmatch.png" alt="ランクマッチ">
+                <img class="btn" id="friendmatch-btn" src="../static/images/friendmatch.png" alt="フレンドマッチ">
+                <img class="btn" src="../static/images/training.png" alt="トレーニング">
+            </div>  
+        </div>
+            
     </div>
     <script src="https://cdn.socket.io/4.7.3/socket.io.min.js" integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
