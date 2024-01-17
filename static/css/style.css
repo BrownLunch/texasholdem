@@ -4,7 +4,7 @@ body{
     background-color: #000;
     overflow: hidden;
 }
-.container{
+.menu{
     width: 100%;
     height: 100%;
     display: flex;
@@ -38,6 +38,12 @@ body{
 .btn{
     height: 33%;
     width: auto;
+    filter: drop-shadow(10px 10px 10px rgba(0,0,0,1));
+}
+.btn:hover{
+    transform: translate(-10px, -10px);
+    transition-duration: 1000ms;
+    filter: drop-shadow(15px 15px 15px rgba(0,0,0,1));
 }
 #friendmatch-btn{
     margin-left: 30%;
