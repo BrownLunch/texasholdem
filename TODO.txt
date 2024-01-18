@@ -3,3 +3,15 @@ TODO:
 2.オンラインpvp機能の追加
 3.ログイン機能の実装
 CPU機能、チャット機能、フレンド機能
+
+<div class="menubg">
+        <div class="left-container">
+        </div>
+        <div class="right-container">
+            <div class="btn-container">
+                <img class="btn" src="../static/images/rankmatch.png" alt="ランクマッチ">
+                <img class="btn" id="friendmatch-btn" src="../static/images/friendmatch.png" alt="フレンドマッチ">
+                <img class="btn" src="../static/images/training.png" alt="トレーニング">
+            </div>  
+        </div>            
+    </div>
