@@ -4,15 +4,25 @@ body{
     background-color: #000;
     overflow: hidden;
 }
-#title-bg{
+#bg{
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
-    background-image: url(../images/titlebg.png);
+    background-image: url(../images/titlebg.png), url(../images/menubg.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+}
+.switchingbg{
+    animation: switchingbg 2s ease;
+    animation-fill-mode: forwards; 
+    animation-delay: 2s;
+}
+@keyframes switchingbg {
+    100% {
+        background-image: url(../images/menubg.png);
+    }
 }
 #title-container{
     display: flex;
