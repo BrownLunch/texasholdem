@@ -20,11 +20,11 @@ body{
 .start::before{
     content: '';
 	background: inherit;   
-    filter: blur(20px);
-    top: -20px;
-    bottom: -20px;
-    left: -20px;
-    right: -20px;
+    filter: blur(15px);
+    top: -15px;
+    bottom: -15px;
+    left: -15px;
+    right: -15px;
     position: absolute;
     z-index: -1;
 }
@@ -32,25 +32,13 @@ body{
     content: '';
 	background: inherit;   
     filter: blur(0);
-    top: -20px;
-    bottom: -20px;
-    left: -20px;
-    right: -20px;
+    top: -15px;
+    bottom: -15px;
+    left: -15px;
+    right: -15px;
+    transition: filter 2s ease-in-out;
     position: absolute;
     z-index: -1;
-}
-.clearblur{
-    animation: clearblur 2s ease-in;
-    animation-duration: 2s;
-    animation-fill-mode: forwards; 
-}
-@keyframes clearblur {
-    0%{
-        filter: blur(30px);
-    }
-    100%{
-        filter:blur(0)
-    }
 }
 #title-container{
     display: flex;
