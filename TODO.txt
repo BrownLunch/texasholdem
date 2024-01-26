@@ -17,7 +17,5 @@ CPU機能、チャット機能、フレンド機能
     </div>
 
 
-html = """<video id=switchingbg autoplay>
-        <source src="../static/switchingbg.mp4" type="video/mp4">
-    </video>"""
+
     
