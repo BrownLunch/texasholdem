@@ -36,16 +36,13 @@ class Deck(list):
    def shuffle(self):
       shuffle(self)
 
-   def deal_hand(self, num):
-      dealcards = []
+   def deal_card(self, num):
+      dealcard = []
       for _ in range(num):
          popcard = self.pop()
-         dealcards.append(popcard.suit + popcard.rank)
-      return dealcards
-   
-   def deal_community(self, num):
-      pass
-   
+         dealcard.append(popcard.suit + popcard.rank)
+      return dealcard
+
 class Player:
    def __init__(self, name, stack):
       self.name = name      
@@ -55,24 +52,78 @@ class Player:
       self.status = "Alive" #プレイヤーが対戦中かすでに負けているか(Alive, Defeted)を管理するプロパティ
       self.action = "" #プレイヤーのアクション(call, raise, fold, allin, check)を管理するプロパティ
 
-   def receive_hand(self, dealtcards):
-      self.hand = dealtcards
+   def receive_hand(self, cards):
+      self.hand = cards
 
    def __str__(self):
-      return f"name:{self.name} stack:{self.stack} bet:{self.bet} status:{self.status}"
+      return f"プレイヤー情報 name:{self.name} stack:{self.stack} bet:{self.bet} status:{self.status} hand:{self.hand}"
       
 
 class Table:
    def __init__(self, sb, bb, playerlimit):
-      self.sb = sb #テーブルのスモールブラインドを設定
-      self.bb = bb #テーブルのビッグブラインドを設定
-      self.playerlimit = playerlimit #人数上限を設定
-      self.pot = 0 #ポットを初期化    
-      self.players = [] #プレイヤー情報を格納する配列
+      self.sb = sb                           #スモールブラインドを設定
+      self.bb = bb                           #ビッグブラインドを設定
+      self.playerlimit = playerlimit         #人数上限を設定
+      self.pot = 0                           #初期ポットを設定   
+      self.community = []                    #コミュニティカード配列を設定
+      self.players = []                      #プレイヤー情報を格納する配列
+
+   def __str__(self) -> str:
+      return f"テーブル情報 SB:{self.sb} BB:{self.bb} コミュニティカード:{self.community} 人数制限:{self.playerlimit} POT:{self.pot} プレイヤー:{self.players}"
 
    # テーブルにプレイヤーを追加するメソッド
    def add_player(self, player):
-      self.players.append(player)
+      if self.playerlimit > len(self.players):
+         self.players.append(player)
+      else:
+         print("人数上限に達しました。")
+
+   def recieve_community(self, cards):
+      self.community.extend(cards)
+
+   # ベッティングラウンド
+   def bettinground(self, startpos):
+      pass
+
+   # プリフロップ
+   def prefrop(self, opencard):
+      self.recieve_community(opencard)
+      self.bettinground()
+
+   # フロップ
+   def frop(self, opencard):
+      self.recieve_community(opencard)
+      self.bettinground()
+
+   # ターン
+   def turn(self, opencard):
+      self.recieve_community(opencard)
+      self.bettinground()
+
+
+   # リバー
+   def river(self, opencard):
+      self.recieve_community(opencard)
+      self.bettinground()
+
+   #ショーダウン
+   def show_down(self, players):
+      pass
+
+
+if __name__ == "__main__":
+   d = Deck()
+   t1 = Table(50, 100, 6)
+   p1 = Player("一郎", 10000)
+   p2 = Player("次郎", 10000)
+   t1.add_player(p1)
+   t1.add_player(p2)
+   p1.receive_hand(d.deal_card(2))
+   p2.receive_hand(d.deal_card(2))
+   print(p1)
+   print(p2)
+   print(t1)
+   
 
 
 
