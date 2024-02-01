@@ -5,7 +5,6 @@ function switching_menu(){
     $(".title").fadeOut(1000); //アニメーション変更の可能性あり
     $("#bg").removeClass("start")
     $("#bg").addClass("end")
-    $("#bg").html()
     $("body").off("mouseup", switching_menu);
 }
 
