@@ -72,7 +72,7 @@ def cal_score(cal_cards, suit=""):
          return score
    return 0
 
-#引数に入れられたカードの役とスコアを返す関数
+# 引数に入れられたカードの役とスコアを返す関数
 def cards_score(d_cards):
    pairs = create_pairs(d_cards) + [(0, 0)]
    parserank = dict(zip(Deck.scores, Deck.ranks))
@@ -128,5 +128,4 @@ def test():
    print("ハイカード：", cards_score(["H2", "D8", "HA", "DT", "S3", "H9"]))
       
 if __name__ == "__main__":
-   deck = Deck()
-   # test()
+   test()
