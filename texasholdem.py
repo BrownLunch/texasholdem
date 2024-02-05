@@ -44,22 +44,67 @@ class Deck(list):
       return dealcard
 
 class Player:
-   def __init__(self, name, sessionid):
+   def __init__(self, name):
       self.__name = name      
       self.__stack = 0
       self.__hand = []
       self.__bet = 0
       self.__status = "Alive"        #プレイヤーが対戦中かすでに負けているか(Alive, Defeted)を管理するプロパティ
       self.__action = ""             #プレイヤーのアクション(call, raise, fold, allin, check)を管理するプロパティ
-      self.__sessionid = sessionid
-   # nameのゲッター
-   def get_name(self):
+      #ここにセッションIDを追加
+   
+   @property
+   def name(self):
       return self.__name
+   
+   @property
+   def stack(self):
+      return self.__stack
+   
+   @property
+   def hand(self):
+      return self.__hand
+   
+   @property
+   def bet(self):
+      return self.__bet
+   
+   @property
+   def status(self):
+      return self.__status
+   
+   @property
+   def action(self):
+      return self.__action
+   
+   @name.setter
+   def name(self, value):
+      self.__name = value
 
-   # betする
-   def bet(self, amount):
-      self.__stack -= amount
-      self.__bet += amount
+   @stack.setter
+   def stack(self, value):
+      self.__stack = value
+
+   @hand.setter
+   def hand(self, value):
+      self.__hand = value
+
+   @bet.setter
+   def bet(self, value):
+      self.__bet = value
+
+   @status.setter
+   def status(self, value):
+      self.__status = value
+
+   @action.setter
+   def action(self, value):
+      self.__action = value
+                            
+   # ベットする
+   def betting(self, betamount):
+      self.stack -= betamount
+      self.bet += betamount
 
    # 手札を受け取る
    def receive_hand(self, cards):
@@ -67,43 +112,124 @@ class Player:
 
    # 管理用
    def __str__(self) -> str:
-      return f"name:{self.__name} stack:{self.__stack} bet:{self.__bet} status:{self.__status} hand:{self.__hand} action:{self.__action}"
+      return f"name:{self.name} stack:{self.stack} bet:{self.bet} status:{self.status} hand:{self.hand} action:{self.action}"
       
 
 class Table:
    def __init__(self, sb, bb, stack, playerlimit):
       self.__sbamount = sb                     #スモールブラインドを管理
       self.__bbamount = bb                     #ビッグブラインドを管理
+      self.__stack = stack                     #スタックを管理
+      self.__playerlimit = playerlimit         #人数上限を管理
       self.__dealeridx = 0                     #ボタンのポジションを管理
       self.__sbidx = 0                         #sbのポジションを管理
       self.__bbidx = 0                         #bbのポジションを管理
-      self.__playerlimit = playerlimit         #人数上限を管理
       self.__pot = 0                           #初期ポットを管理   
       self.__community = []                    #コミュニティカード配列を管理
       self.__players = []                      #プレイヤー情報を格納する配列を管理
 
+   @property
+   def sbamount(self):
+      return self.__sbamount
+   
+   @property
+   def bbamount(self):
+      return self.__bbamount
+   
+   @property
+   def stack(self):
+      return self.__stack
+   
+   @property
+   def playerlimit(self):
+      return self.__playerlimit
+   
+   @property
+   def dealeridx(self):
+      return self.__dealeridx
+   
+   @property
+   def sbidx(self):
+      return self.__sbidx
+   
+   @property
+   def bbidx(self):
+      return self.__bbidx
+   
+   @property
+   def pot(self):
+      return self.__pot
+   
+   @property
+   def community(self):
+      return self.__community
+   
+   @property
+   def players(self):
+      return self.__players
+   
+   @sbamount.setter
+   def sbamount(self, value):
+      self.__sbamount = value
+
+   @bbamount.setter
+   def bbamount(self, value):
+      self.__bbamount = value
+
+   @stack.setter
+   def stack(self, value):
+      self.__stack = value
+
+   @playerlimit.setter
+   def playerlimit(self, value):
+      self.__playerlimit = value
+
+   @dealeridx.setter
+   def dealeridx(self, value):
+      self.__dealeridx = value
+
+   @sbidx.setter
+   def sbidx(self, value):
+      self.__sbidx = value
+
+   @bbidx.setter
+   def bbidx(self, value):
+      self.__bbidx = value
+
+   @pot.setter
+   def pot(self, value):
+      self.__pot = value
+
+   @community.setter
+   def community(self, value):
+      self.__community = value
+
+   @players.setter
+   def players(self, value):
+      self.__players = value
+
    # 管理用
    def __str__(self) -> str:
-      player_info = "\n".join(str(player) for player in self.__players)
-      return f"■テーブル情報\nsb_amount:{self.__sbamount}\nbb_amount:{self.__bbamount}\nBTN:{self.__players[self.__dealeridx].get_name()}\nSB:{self.__players[self.__sbidx].get_name()}\nBB:{self.__players[self.__bbidx].get_name()}\nコミュニティカード:{self.__community}\n人数制限:{self.__playerlimit}\nPOT:{self.__pot}\n■プレイヤー情報\n{player_info}"
+      player_info = "\n".join(str(player) for player in self.players)
+      return f"■テーブル情報\nsb_amount:{self.sbamount}\nbb_amount:{self.bbamount}\nBTN:{self.players[self.dealeridx].name}\nSB:{self.players[self.sbidx].name}\nBB:{self.players[self.bbidx].name}\n初期スタック{self.stack}\n人数制限:{self.playerlimit}\nコミュニティカード:{self.community}\nPOT:{self.pot}\n■プレイヤー情報\n{player_info}"
 
    # テーブルにプレイヤーを追加する
    def add_player(self, player):
-      if self.__playerlimit > len(self.__players):
-         self.__players.append(player)
+      if self.playerlimit > len(self.players):
+         self.players.append(player)
       else:
          print("人数上限に達しました。")
 
    #マッチ開始時のBTNを決定する
    def choose_dealer(self):
-      self.__dealeridx = random.randint(0, len(self.__players) - 1)
-      self.__sbidx = (self.__dealeridx + 1) % len(self.__players)
-      self.__bbidx = (self.__dealeridx + 2) % len(self.__players)
+      self.dealeridx = random.randint(0, len(self.players) - 1)
+      self.sbidx = (self.dealeridx + 1) % len(self.players)
+      self.bbidx = (self.dealeridx + 2) % len(self.players)
 
    # 強制掛け金を払う
    def pay_sbbb(self):
-      self.__players[self.__sbidx].bet(self.__sbamount)
-      self.__players[self.__bbidx].bet(self.__bbamount)
+      self.players[self.sbidx].betting(self.sbamount)
+      self.players[self.bbidx].betting(self.bbamount)
 
    # ゲーム
    def game(self):
@@ -117,7 +243,7 @@ class Table:
 
    # コミュニティーカードを受け取る
    def recieve_community(self, cards):
-      self.__community.extend(cards)
+      self.community.extend(cards)
 
    
    # ベッティングラウンド
@@ -130,7 +256,7 @@ class Table:
       self.pay_sbbb()
 
       # ハンドをプレイヤー全員に配る
-      for p in self.__players:
+      for p in self.players:
          p.receive_hand(deck.deal_card(2))
       self.bettinground()
 
@@ -156,13 +282,13 @@ class Table:
 
 
 if __name__ == "__main__":
-   table = Table(50, 100, 6)
-   table.add_player(Player("一郎", 10000))
-   table.add_player(Player("二郎", 10000))
-   table.add_player(Player("三郎", 10000))
-   table.add_player(Player("四郎", 10000))
-   table.add_player(Player("五郎", 10000))
-   table.add_player(Player("六郎", 10000))
+   table = Table(50, 100, 10000, 6)
+   table.add_player(Player("一郎"))
+   table.add_player(Player("二郎"))
+   table.add_player(Player("三郎"))
+   table.add_player(Player("四郎"))
+   table.add_player(Player("五郎"))
+   table.add_player(Player("六郎"))
    table.choose_dealer()
    table.game()
    print(table)
