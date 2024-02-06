@@ -3,6 +3,7 @@
 """
 
 import random
+from determine import cards_score
 
 # Cardクラスを作成
 class Card:
@@ -217,6 +218,7 @@ class Table:
    def add_player(self, player):
       if self.playerlimit > len(self.players):
          self.players.append(player)
+         player.stack = self.stack
       else:
          print("人数上限に達しました。")
 
@@ -247,7 +249,7 @@ class Table:
 
    
    # ベッティングラウンド
-   def bettinground(self):
+   def bettinground(self, startidx):
       pass
 
    # プリフロップ
@@ -278,7 +280,14 @@ class Table:
 
    #ショーダウン
    def showdown(self):
-      pass
+      winneridx = 0
+      for i in range(self.playerlimit):
+         if self.players[i].status == "Alive":
+            if cards_score(self.players[winneridx].hand + self.community)[1:] < cards_score(self.players[i].hand + self.community)[1:]:
+               winneridx = i
+      print(f"{self.players[winneridx].name}の勝利!!!")
+
+
 
 
 if __name__ == "__main__":
@@ -289,6 +298,6 @@ if __name__ == "__main__":
    table.add_player(Player("四郎"))
    table.add_player(Player("五郎"))
    table.add_player(Player("六郎"))
-   table.choose_dealer()
+   table.choose_dealer() 
    table.game()
    print(table)
