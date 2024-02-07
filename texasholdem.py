@@ -125,7 +125,8 @@ class Table:
       self.__dealeridx = 0                     #ボタンのポジションを管理
       self.__sbidx = 0                         #sbのポジションを管理
       self.__bbidx = 0                         #bbのポジションを管理
-      self.__pot = 0                           #初期ポットを管理   
+      self.__pot = 0                           #初期ポットを管理
+      self.__minimumraise = 0                  #ミニマムレイズを管理
       self.__community = []                    #コミュニティカード配列を管理
       self.__players = []                      #プレイヤー情報を格納する配列を管理
 
@@ -160,6 +161,10 @@ class Table:
    @property
    def pot(self):
       return self.__pot
+   
+   @property
+   def minimumraise(self):
+      return self.__minimumraise
    
    @property
    def community(self):
@@ -199,6 +204,10 @@ class Table:
 
    @pot.setter
    def pot(self, value):
+      self.__pot = value
+
+   @pot.setter
+   def minimumraise(self, value):
       self.__pot = value
 
    @community.setter
