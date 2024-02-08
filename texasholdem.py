@@ -50,7 +50,7 @@ class Player:
       self.__stack = 0
       self.__hand = []
       self.__bet = 0
-      self.__status = "Alive"        #プレイヤーが対戦中かすでに負けているか(Alive, Defeted)を管理するプロパティ
+      self.__status = "Active"        #プレイヤーが対戦中かすでに負けているか(Active, Defeted)を管理するプロパティ
       self.__action = ""             #プレイヤーのアクション(call, raise, fold, allin, check)を管理するプロパティ
       #ここにセッションIDを追加
    
@@ -291,7 +291,7 @@ class Table:
    def showdown(self):
       winneridx = 0
       for i in range(self.playerlimit):
-         if self.players[i].status == "Alive":
+         if self.players[i].status == "Active":
             if cards_score(self.players[winneridx].hand + self.community)[1:] < cards_score(self.players[i].hand + self.community)[1:]:
                winneridx = i
       print(f"{self.players[winneridx].name}の勝利!!!")

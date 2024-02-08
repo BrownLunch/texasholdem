@@ -17,11 +17,15 @@ function switching_menu(){
 }
 
 function slide_out(){
-    $(".btn").addClass("slide-out");
+    $(".btn1").addClass("slide-out");
 }
 
 $("body").on("mouseup", switching_menu);
-$("#friendmatch-btn").on("mouseup", slide_out);
+$("#friendmatch-btn").on("mouseup", function(){
+    slide_out()
+    $(".friendmatch-container").fadeIn(1000)
+    $(".friendmatch-container").css("display", "flex")
+});
 
 
 
