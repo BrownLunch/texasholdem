@@ -161,17 +161,24 @@ body{
 }
 .friendmatch-nav{
     position: relative;
+    height: auto;
     width: 100%;
 }
 .friendmatch-nav-img{
-    width: 100%;
-    position: relative;
+    width: 70%;
+    margin: 0 auto;
+    display: block;
 }
-.friendmatch-nav .back{
-    width: 100%;
+.friendmatch-nav .back-btn{
     position: absolute;
+    transform: translate(-50%, -50%);
+    transition: height 0.1s ease;
+    top: 50%;
+    left: 25%;
+    height: 60%;
+    width: auto;
 }
 .btn2{
-    width: 50%;
+    width: 70%;
     height: auto;
 }
