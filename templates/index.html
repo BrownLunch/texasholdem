@@ -8,8 +8,8 @@
     <title>Poker.io</title>
 </head>
 <body>   
-    <div id="bg" class="start">   
-        <div id="title-container"> 
+    <div class="bg start">   
+        <div class="title-container"> 
             <div class="title">
                 <img id="title-img" src="../static/images/title.png" alt="タイトル">
             </div>
@@ -17,7 +17,7 @@
                 <img id="title-nav-img" src="../static/images/clickanywhere.png" alt="クリックしてください">
             </div>   
         </div> 
-        <div id="menu-container">
+        <div class="menu-container">
             <div class="left-container">
             </div>
             <div class="right-container">
@@ -28,16 +28,35 @@
                 </div>  
                 <div class="friendmatch-container">
                     <div class="friendmatch-nav">
-                        <img class="back-btn" src="../static/images/back.png">
+                        <img class="back-btn" id="friendmatchback-btn" src="../static/images/back.png">
                         <img class="friendmatch-nav-img" src="../static/images/friendmatchnav.png">
                     </div>                   
-                    <img class="btn btn2" src="../static/images/createroom.png">
+                    <img class="btn btn2" id="createroom-btn" src="../static/images/createroom.png">
                     <img class="btn btn2" src="../static/images/joinroom.png">
                 </div> 
             </div>
         </div>
-        <div class="createroom-container" style="display: none;">
-
+        <div class="createroom-container">
+            <div class="createroom-nav">
+                <img class="back-btn" id="createroomback-btn" src="../static/images/back2.png">
+                <img class="createroom-nav-img" src="../static/images/createroomnav.png">
+                <div class="createroom-content">
+                    <div class="createroom-label-container">
+                        <div>
+                            <p class="createroom-label">人数上限：</p>
+                        </div>
+                        <div>
+                            <p class="createroom-label">初期チップ：</p>
+                        </div> 
+                        <div>
+                            <p class="createroom-label">長考時間：</p>
+                        </div>                      
+                    </div>
+                    <div class="createroom-choose-container">
+                        
+                    </div>
+                </div>
+            </div>
         </div>     
     </div>
     <script src="https://cdn.socket.io/4.7.3/socket.io.min.js" integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg" crossorigin="anonymous"></script>

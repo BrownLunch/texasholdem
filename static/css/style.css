@@ -5,7 +5,7 @@ body{
     background-color: #000;
     overflow: hidden;
 }
-#bg{  
+.bg{  
     position: absolute;
     display: flex;
     top: 0;
@@ -47,7 +47,7 @@ body{
     position: absolute;
     z-index: -1;
 }
-#title-container{
+.title-container{
     width: 100%;
     height: auto;
     display: flex;
@@ -74,7 +74,7 @@ body{
         opacity: 1;
     }
 }
-#menu-container{
+.menu-container{
     display: none;
     width: 100%;
     height: 100%;
@@ -181,4 +181,54 @@ body{
 .btn2{
     width: 70%;
     height: auto;
+}
+.createroom-container{
+    display: none;
+    width: 100%;
+    height: auto;
+}
+.createroom-nav{
+    position: relative;
+    width: 100%;
+    height: 15%;
+}
+.createroom-nav .back-btn{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 29%;
+    left: 5%;
+    width: auto;
+    height: 40%;
+}
+.createroom-nav-img{
+    width: auto;
+    height: 100%;
+    margin-left: 2%;
+}
+.createroom-content{
+    width: 100%;
+    height:70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.createroom-content::before{
+    content: "";
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.createroom-content::after{
+    content: "";
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.createroom-label{
+    color: #fff;
+    font-size: 200%;
+    letter-spacing: 0.2em;
+    text-align: right;
+}
+.createroom-create{
+    width: 100%;
+    height: 15%;
 }
