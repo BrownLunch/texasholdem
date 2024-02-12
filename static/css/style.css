@@ -1,3 +1,6 @@
+html{
+    font-size: 62.5%;
+}
 body{
     position: relative;
     margin: 0;
@@ -107,7 +110,7 @@ body{
     position: relative;
     height: 33%;
     width: auto;
-    transform: translate(1%, 1%);
+    transform: translate(2%, 2%);
     transition-duration: 500ms;
     filter: drop-shadow(10px 10px 10px rgba(0,0,0,1));
 }
@@ -143,7 +146,7 @@ body{
     }
 }
 .btn:hover{
-    transform: translate(-1%, -1%);
+    transform: translate(-2%, -2%);
     transition-duration: 500ms;
     filter: drop-shadow(15px 15px 15px rgba(0,0,0,1));
 }
@@ -177,6 +180,7 @@ body{
     left: 25%;
     height: 60%;
     width: auto;
+    z-index: 3;
 }
 .btn2{
     width: 70%;
@@ -189,46 +193,54 @@ body{
 }
 .createroom-nav{
     position: relative;
+    display: flex;
+    align-items: center;
     width: 100%;
-    height: 15%;
+    height: 20%;
 }
 .createroom-nav .back-btn{
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 29%;
+    top: 50%;
     left: 5%;
     width: auto;
-    height: 40%;
+    height: 50%;
+    z-index: 3;
 }
 .createroom-nav-img{
+    position: relative;
+    display: block;
+    margin: 0 auto;
     width: auto;
-    height: 100%;
+    height: 80%;
     margin-left: 2%;
 }
 .createroom-content{
     width: 100%;
-    height:70%;
+    height:60%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.7);
 }
-.createroom-content::before{
-    content: "";
-    background-color: rgba(0, 0, 0, 0.7);
-}
-.createroom-content::after{
-    content: "";
-    background-color: rgba(0, 0, 0, 0.7);
+.createroom-label-container{
+    height: 100%;
+    width: auto;
+    display: flex;
+    flex-direction: column;
 }
 .createroom-label{
+    height: 100%;
+    width: auto;
     color: #fff;
-    font-size: 200%;
-    letter-spacing: 0.2em;
+    font-size: 2vw;
+    letter-spacing: 0.2rem;
     text-align: right;
+}
+.createroom-choose{
+
 }
 .createroom-create{
     width: 100%;
-    height: 15%;
+    height: 20%;
 }

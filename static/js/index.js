@@ -59,10 +59,10 @@ $("#createroom-btn").on("mousedown", function(){
     $(".menu-container").fadeOut(500, fade_in_createroom)
 })
 $("#createroomback-btn").on("mousedown", function(){
-    $("#createroomback-btn").css("height", "50%");  
+    $("#createroomback-btn").css("height", "60%");  
 })
 $("#createroomback-btn").on("mouseup", function(){
-    $("#createroomback-btn").css("height", "40%");
+    $("#createroomback-btn").css("height", "50%");
 })
 $("#createroomback-btn").on("click", function(){
     $(".createroom-container").fadeOut(500, fade_in_menu);
