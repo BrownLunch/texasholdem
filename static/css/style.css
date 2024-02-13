@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
 html{
     font-size: 62.5%;
+    font-family: "M PLUS 1p", sans-serif;
 }
 body{
     position: relative;
@@ -8,6 +9,9 @@ body{
     height:100vh;
     background-color: #000;
     overflow: hidden;
+}
+input[type="radio"]{
+    display: none;
 }
 .bg{  
     position: absolute;
@@ -230,34 +234,63 @@ body{
     display: flex;
     flex-direction: column;
 }
-.minus{
-    position: absolute;
-    color: #fff;
-    font-size: 3vw;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 4%;
-}
-.plus{
-    position: absolute;
-    color: #fff;
-    font-size: 3vw;
-    transform: translate(-50%, -50%);
-    top: 50%;
-    left: 21%;
-}
 .createroom-label{
     display: flex;
-    font-family: "M PLUS 1p", sans-serif;
     height: 33.3%;
     width: auto;
     color: #fff;
     font-size: 2vw;
+    font-weight: bold;
     letter-spacing: 0.2rem;
     text-align: right;
     justify-content: flex-end;
     align-items: center;
+    white-space: nowrap;
+    text-shadow:0.5rem 0.5rem 0.5rem #000;
 }
+.minus{
+    position: absolute;
+    color: #fff;
+    font-size: 2.5vw;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 3%;
+    text-shadow:0.5rem 0.5rem 0.5rem #000;
+    z-index: 3;  
+}
+.player-num{
+    position: absolute;
+    color: #fff;
+    font-size: 2.0vw;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+    top: 51%;
+    left: 8%;
+    z-index: 3;  
+}
+.player-unit{
+    position: absolute;
+    color: #fff;
+    font-size: 2.0vw;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+    top: 51%;
+    left: 11.5%;
+    z-index: 3;  
+}
+.plus{
+    position: absolute;
+    color: #fff;
+    font-size: 2.5vw;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+    top: 49%;
+    left: 16.5%;
+    text-shadow:0.5rem 0.5rem 0.5rem #000;
+    z-index: 3;
+}
+
 .createroom-choose-container{
     height: 100%;
     width: 65%;
@@ -273,19 +306,41 @@ body{
     align-items: center;
 }
 .createroom-counter-img{
-    width: 25%;
+    width: 20%;
     height: auto;
+    filter: drop-shadow(0.5rem 0.5rem 0.5rem rgba(0,0,0,1));
 }
 .createroom-choose{
     height: 33.3%;
     width: auto;
     display: flex;
     justify-content: space-around;
+    
+}
+.createroom-choose-box{
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: auto;
     align-items: center;
 }
-.createroom-choose-btn{
+.createroom-choose-txt{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 2vw;
+    font-weight: bold;
+    text-shadow:0.5rem 0.5rem 0.5rem #000;
+    white-space: nowrap;
+    z-index: 3;
+    pointer-events: none;
+}
+.createroom-choose-img{
     height: 45%;
     width: auto;
+    filter: drop-shadow(10px 10px 10px rgba(0,0,0,1));
 }
 .createroom-create{
     width: 100%;
