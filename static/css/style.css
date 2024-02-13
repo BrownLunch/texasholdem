@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p&display=swap');
 html{
     font-size: 62.5%;
 }
@@ -225,20 +226,66 @@ body{
 }
 .createroom-label-container{
     height: 100%;
-    width: auto;
+    width: 15%;
     display: flex;
     flex-direction: column;
 }
+.minus{
+    position: absolute;
+    color: #fff;
+    font-size: 3vw;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 4%;
+}
+.plus{
+    position: absolute;
+    color: #fff;
+    font-size: 3vw;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 21%;
+}
 .createroom-label{
-    height: 100%;
+    display: flex;
+    font-family: "M PLUS 1p", sans-serif;
+    height: 33.3%;
     width: auto;
     color: #fff;
     font-size: 2vw;
     letter-spacing: 0.2rem;
     text-align: right;
+    justify-content: flex-end;
+    align-items: center;
+}
+.createroom-choose-container{
+    height: 100%;
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+}
+.createroom-counter{
+    position: relative;
+    height:33.3%;
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.createroom-counter-img{
+    width: 25%;
+    height: auto;
 }
 .createroom-choose{
-
+    height: 33.3%;
+    width: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.createroom-choose-btn{
+    height: 45%;
+    width: auto;
 }
 .createroom-create{
     width: 100%;
