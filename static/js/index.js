@@ -58,6 +58,8 @@ $("#friendmatchback-btn").on("click", function(){
 // 部屋作成画面への遷移
 $("#createroom-btn").on("mousedown", function(){
     $(".menu-container").fadeOut(500, fade_in_createroom)
+    initchipbtn();
+    initthinkbtn();
 })
 $("#createroomback-btn").on("mousedown", function(){
     $("#createroomback-btn").css("height", "60%");  
@@ -123,6 +125,27 @@ $("#think300-btn").on("mousedown", function(){
     $("input[value='300']").prop("checked", true);
     changethinkbtn();
 })
+
+function initchipbtn(){
+    $("#chip10000").prop("checked", true);
+    $("input[name='chipnum']").each(function(idx){
+        if(idx < 1){
+            $(".createroom-choose-chip").eq(idx).attr("src", "../static/images/createroomchoosed.png")           
+        }else{
+            $(".createroom-choose-chip").eq(idx).attr("src", "../static/images/createroomchoose.png") 
+        }
+    })
+}
+function initthinkbtn(){
+    $("#think15").prop("checked", true);
+    $("input[name='thinktime']").each(function(idx){
+        if(idx < 1){
+            $(".createroom-choose-think").eq(idx).attr("src", "../static/images/createroomchoosed.png")           
+        }else{
+            $(".createroom-choose-think").eq(idx).attr("src", "../static/images/createroomchoose.png") 
+        }
+    })
+}
 
 function changechipbtn(){
     $("input[name='chipnum']").each(function(idx){

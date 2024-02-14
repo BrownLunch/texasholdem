@@ -117,7 +117,7 @@ input[type="radio"]{
     width: auto;
     transform: translate(2%, 2%);
     transition-duration: 500ms;
-    filter: drop-shadow(10px 10px 10px rgba(0,0,0,1));
+    filter: drop-shadow(0.5vw 0.5vw 0.5vw rgba(0,0,0,1));
 }
 .btn1{
     right: -100%;
@@ -153,7 +153,7 @@ input[type="radio"]{
 .btn:hover{
     transform: translate(-2%, -2%);
     transition-duration: 500ms;
-    filter: drop-shadow(15px 15px 15px rgba(0,0,0,1));
+    filter: drop-shadow(1vw 1vw 1vw rgba(0,0,0,1));
 }
 #friendmatch-btn{
     margin-left: 30%;
@@ -246,7 +246,7 @@ input[type="radio"]{
     justify-content: flex-end;
     align-items: center;
     white-space: nowrap;
-    text-shadow:0.5rem 0.5rem 0.5rem #000;
+    text-shadow:0.5vw 0.5vw 0.5vw #000;
 }
 .minus{
     position: absolute;
@@ -256,7 +256,7 @@ input[type="radio"]{
     transform: translate(-50%, -50%);
     top: 50%;
     left: 3%;
-    text-shadow:0.5rem 0.5rem 0.5rem #000;
+    text-shadow:0.5vw 0.5vw 0.5vw #000;
     z-index: 3;  
 }
 .player-num{
@@ -287,7 +287,7 @@ input[type="radio"]{
     transform: translate(-50%, -50%);
     top: 49%;
     left: 16.5%;
-    text-shadow:0.5rem 0.5rem 0.5rem #000;
+    text-shadow:0.5vw 0.5vw 0.5vw #000;
     z-index: 3;
 }
 
@@ -308,7 +308,7 @@ input[type="radio"]{
 .createroom-counter-img{
     width: 20%;
     height: auto;
-    filter: drop-shadow(0.5rem 0.5rem 0.5rem rgba(0,0,0,1));
+    filter: drop-shadow(0.5vw 0.5vw 0.5vw rgba(0,0,0,1));
 }
 .createroom-choose{
     height: 33.3%;
@@ -332,7 +332,7 @@ input[type="radio"]{
     color: #fff;
     font-size: 2vw;
     font-weight: bold;
-    text-shadow:0.5rem 0.5rem 0.5rem #000;
+    text-shadow:0.5vw 0.5vw 0.5vw #000;
     white-space: nowrap;
     z-index: 3;
     pointer-events: none;
@@ -340,9 +340,43 @@ input[type="radio"]{
 .createroom-choose-img{
     height: 45%;
     width: auto;
-    filter: drop-shadow(10px 10px 10px rgba(0,0,0,1));
+    filter: drop-shadow(0.5vw 0.5vw 0.5vw rgba(0,0,0,1));
 }
 .createroom-create{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     height: 20%;
+}
+.create-btn{
+    height: 80%;
+    width: auto;
+    transform: translate(2%, 2%);
+    transition-duration: 500ms;
+    filter: drop-shadow(0.5vw 0.5vw 0.5vw rgba(0,0,0,1));
+}
+.create-btn:hover{
+    transform: translate(-2%, -2%);
+    transition-duration: 500ms;
+    filter: drop-shadow(1vw 1vw 1vw rgba(0,0,0,1));
+}
+.modal-overlay, .modal-content{
+    display: none;
+    position: absolute;
+}
+.modal-overlay{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+.modal-content{
+    width: 33.3%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-image: linear-gradient(to bottom, rgb(255, 218, 113), rgb(42, 31, 0)) 1;
 }
