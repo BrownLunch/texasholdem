@@ -32,7 +32,7 @@
                         <img class="friendmatch-nav-img" src="../static/images/friendmatchnav.png">
                     </div>                   
                     <img class="btn btn2" id="createroom-btn" src="../static/images/createroom.png">
-                    <img class="btn btn2" src="../static/images/joinroom.png">
+                    <img class="btn btn2" id="joinroom-btn" src="../static/images/joinroom.png">
                 </div> 
             </div>
         </div>
@@ -116,11 +116,33 @@
                 <img class="create-btn" src="../static/images/create.png">
             </div>
         </div>
-        <div class="modal-overlay">
-            <div class="modal-content">
-                <div class="modal-close"></div>
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-close">×</div>
+            <div class="joinroom-keypad-container">
+                <div class="joinroom-keypad-title">JoinRoom</div>
+                <div class="joinroom-keypad-display"></div>
+                <div class="joinroom-keypad">
+                    <div class="keypad-btn keypad-digit">1</div>
+                    <div class="keypad-btn keypad-digit">2</div>
+                    <div class="keypad-btn keypad-digit">3</div>
+                    <div class="keypad-btn keypad-digit">4</div>
+                    <div class="keypad-btn keypad-digit">5</div>
+                    <div class="keypad-btn keypad-digit">6</div>
+                    <div class="keypad-btn keypad-digit">7</div>
+                    <div class="keypad-btn keypad-digit">8</div>
+                    <div class="keypad-btn keypad-digit">9</div>
+                    <div class="keypad-btn keypad-clear">C</div>
+                    <div class="keypad-btn keypad-digit">0</div>
+                    <div class="keypad-btn">×</div>
+                </div>
+                <div class="joinroom-keypad-join">
+
+                </div>
             </div>
-        </div>  
+            
+        </div>
+        
     </div>
     <script src="https://cdn.socket.io/4.7.3/socket.io.min.js" integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>

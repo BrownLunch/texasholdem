@@ -167,6 +167,28 @@ function changethinkbtn(){
     })
 }
 
+//部屋参加モーダル関連
+$("#joinroom-btn").on("mousedown", function(){
+    $(".modal-overlay").css("display", "block");
+    $(".modal-content").fadeIn(500);
+})
+
+$(".modal-overlay").on("mousedown", function(){
+    $(".modal-overlay").css("display", "none");
+    $(".modal-content").fadeOut(500);
+})
+
+//部屋参加キーパッド関連
+$(".keypad-digit").on("mousedown", function(){
+    if($(".joinroom-keypad-display").text().length < 5){
+        $(".joinroom-keypad-display").append($(this).text());
+    }
+})
+$(".keypad-clear").on("mousedown", function(){
+    $(".joinroom-keypad-display").text("");
+})
+
+
 
 
 
