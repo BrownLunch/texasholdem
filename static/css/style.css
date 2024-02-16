@@ -364,6 +364,28 @@ input[type="radio"]{
 }
 
 /* モーダル関連 */
+.open{
+    animation: modalopen 0.3s forwards;
+}
+.close{
+    animation: modalclose 0.3s forwards;
+}
+@keyframes modalopen {
+    from{
+        transform: translate(-50%, -50%) scale(0);
+    }
+    to{
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+@keyframes modalclose {
+    from{
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to{
+        transform: translate(-50%, -50%) scale(0);
+    }
+}
 .modal-overlay, .modal-content{
     display: none;
     position: absolute;
@@ -381,22 +403,25 @@ input[type="radio"]{
     height: auto;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    border: 1% solid ;
-    border-image: linear-gradient(to bottom, rgb(255, 218, 113), rgb(42, 31, 0)) 1;
+    transform: translate(-50%, -50%) scale(0);
+    border:0.2vw solid yellow;
+    border-image: linear-gradient(to bottom, rgb(255, 218, 113) 0%, rgb(42, 31, 0) 100%);
+    border-image-slice: 1; 
     background-image: linear-gradient(0deg, rgba(40, 15, 0, 1), rgba(195, 15, 0, 1) 50%, rgba(40, 15, 0, 1));
     z-index: 101;
 }
-.modal-close{
+.modalclose{
     position: absolute;
-    top: 0;
-    left: 100%;
-    font-size: 3vw;
-    font-weight: bold;
-    height: aut;
-    width: auto;
-    color: yellow;
+    transform: translate(-50%, -50%);
+    top: 1%;
+    left: 97%;
+    width: 11%;
+    height: auto;
     z-index: 102;
+}
+.modalclose-btn{
+    width: 100%;
+    height: auto;
 }
 .joinroom-keypad-container{
     display: flex;
@@ -405,13 +430,12 @@ input[type="radio"]{
     justify-content: center;
     align-items: center;
 }
-.joinroom-keypad-title{
-    font-family: "Oleo Script", system-ui;
-    font-size: 3vw;
-    letter-spacing: 0.2vw;
-    background:linear-gradient(to bottom, rgb(255, 218, 113), rgb(42, 31, 0));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.joinroom-txt{
+    width: 50%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    filter: drop-shadow(0.1vw 0.1vw 0.1vw rgba(0,0,0,1));
 }
 .joinroom-keypad-display{
     width: 25vw;
@@ -422,8 +446,6 @@ input[type="radio"]{
     font-size: 3vw;
     font-weight: bold;
     letter-spacing: 0.1vw;
-    box-shadow:outset 0.1vw 0.1vw 0.1vw rgba(40, 15, 0, 1),
-                outset -0.1vw -0.1vw 0.1vw rgba(40, 15, 0, 1);
 }
 .joinroom-keypad{
     display: grid;
@@ -438,6 +460,18 @@ input[type="radio"]{
     font-weight: bold;
     text-align: center;
     background-color: rgb(228, 19, 0);
-    border-radius: 5%;
-    
+    border-radius: 5%;    
+}
+.join-btn{
+    display: block;
+    width: 50%;
+    height: auto;
+    margin: 0 auto;
+    filter: drop-shadow(0.5vw 0.5vw 0.5vw rgba(0,0,0,1));
+}
+/* ゲーム画面 */
+.game-container{
+    display: none;
+    width: 100%;
+    height: auto;
 }

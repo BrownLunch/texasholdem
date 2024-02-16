@@ -170,12 +170,31 @@ function changethinkbtn(){
 //部屋参加モーダル関連
 $("#joinroom-btn").on("mousedown", function(){
     $(".modal-overlay").css("display", "block");
-    $(".modal-content").fadeIn(500);
+    $(".modal-content").css("display", "block");
+    $(".modal-content").removeClass("close");
+    $(".modal-content").addClass("open");
 })
 
 $(".modal-overlay").on("mousedown", function(){
+    $(".joinroom-keypad-display").text("");
     $(".modal-overlay").css("display", "none");
-    $(".modal-content").fadeOut(500);
+    $(".modal-content").removeClass("close");
+    $(".modal-content").addClass("open");
+})
+
+$(".modalclose-btn").on("mousedown", function(){
+    $(".modalclose").css("width", "12%");
+})
+
+$(".modalclose-btn").on("mouseup", function(){
+    $(".modalclose").css("width", "11%");
+})
+
+$(".modalclose-btn").on("click", function(){
+    $(".joinroom-keypad-display").text("");
+    $(".modal-overlay").css("display", "none");
+    $(".modal-content").removeClass("open");
+    $(".modal-content").addClass("close");
 })
 
 //部屋参加キーパッド関連
@@ -187,6 +206,7 @@ $(".keypad-digit").on("mousedown", function(){
 $(".keypad-clear").on("mousedown", function(){
     $(".joinroom-keypad-display").text("");
 })
+
 
 
 
