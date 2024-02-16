@@ -126,6 +126,13 @@ $("#think300-btn").on("mousedown", function(){
     changethinkbtn();
 })
 
+//ゲーム画面への遷移
+$(".create-btn").on("mousedown", function(){
+    $(".createroom-container").css("display", "none");
+    $(".menu-container").css("display", "none");
+    $(".game-container").css("display", "block");
+})
+
 function initchipbtn(){
     $("#chip10000").prop("checked", true);
     $("input[name='chipnum']").each(function(idx){
@@ -176,10 +183,10 @@ $("#joinroom-btn").on("mousedown", function(){
 })
 
 $(".modal-overlay").on("mousedown", function(){
-    $(".joinroom-keypad-display").text("");
+    $(".roomnum-txt").text("");
     $(".modal-overlay").css("display", "none");
-    $(".modal-content").removeClass("close");
-    $(".modal-content").addClass("open");
+    $(".modal-content").removeClass("open");
+    $(".modal-content").addClass("close");
 })
 
 $(".modalclose-btn").on("mousedown", function(){
@@ -191,7 +198,7 @@ $(".modalclose-btn").on("mouseup", function(){
 })
 
 $(".modalclose-btn").on("click", function(){
-    $(".joinroom-keypad-display").text("");
+    $(".roomnum-txt").text("");
     $(".modal-overlay").css("display", "none");
     $(".modal-content").removeClass("open");
     $(".modal-content").addClass("close");
@@ -199,12 +206,17 @@ $(".modalclose-btn").on("click", function(){
 
 //部屋参加キーパッド関連
 $(".keypad-digit").on("mousedown", function(){
-    if($(".joinroom-keypad-display").text().length < 5){
-        $(".joinroom-keypad-display").append($(this).text());
+    if($(".roomnum-txt").text().length < 5){
+        $(".roomnum-txt").append($(this).text());
     }
 })
 $(".keypad-clear").on("mousedown", function(){
-    $(".joinroom-keypad-display").text("");
+    $(".roomnum-txt").text("");
+})
+$(".keypad-back").on("mousedown", function(){
+    if($(".roomnum-txt").text().length > 0){
+        $(".roomnum-txt").text($(".roomnum-txt").text().slice(0, -1))
+    }
 })
 
 

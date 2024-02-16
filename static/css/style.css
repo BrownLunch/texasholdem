@@ -399,7 +399,7 @@ input[type="radio"]{
     z-index: 100;
 }
 .modal-content{
-    width: 33.3%;
+    width: 30%;
     height: auto;
     top: 50%;
     left: 50%;
@@ -438,18 +438,27 @@ input[type="radio"]{
     filter: drop-shadow(0.1vw 0.1vw 0.1vw rgba(0,0,0,1));
 }
 .joinroom-keypad-display{
-    width: 25vw;
+    position: relative;
+    width: 60%;
     height: auto;
-    text-align: center;
-    background-color: #000;
+}
+.roomnum-txt{
+    position: absolute;
     color: #fff;
-    font-size: 3vw;
     font-weight: bold;
-    letter-spacing: 0.1vw;
+    font-size: 2vw;
+    letter-spacing: 0.2vw;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+.roomnum-disp{
+    width: 100%;
+    height: 100%;
 }
 .joinroom-keypad{
     display: grid;
-    width: 80%;
+    width: 70%;
     margin-top: 3%;
     grid-template-columns: repeat(3, 1fr);
     gap: 1%;
@@ -459,11 +468,14 @@ input[type="radio"]{
     font-size: 2vw;
     font-weight: bold;
     text-align: center;
-    background-color: rgb(228, 19, 0);
+    background:  linear-gradient(to bottom, rgb(50, 50, 50) 0%, rgb(80, 80, 80) 50%, rgb(50, 50, 50) 100%);
+    border: 0.2vw solid #000;
+    border-image: linear-gradient(to bottom, rgb(255, 218, 113) 0%, rgb(42, 31, 0) 100%);
+    border-image-slice: 1; 
     border-radius: 5%;    
 }
 .join-btn{
-    display: block;
+    display: block; 
     width: 50%;
     height: auto;
     margin: 0 auto;
@@ -473,5 +485,7 @@ input[type="radio"]{
 .game-container{
     display: none;
     width: 100%;
-    height: auto;
+    height: 100%;
+    background-image: url(../images/gamebg.png);
+    background-size: cover;
 }
