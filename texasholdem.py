@@ -117,11 +117,11 @@ class Player:
       
 
 class Table:
-   def __init__(self, sb, bb, stack, playerlimit):
+   def __init__(self, sb, bb, stack, maxplayers):
       self.__sbamount = sb                     #スモールブラインドを管理
       self.__bbamount = bb                     #ビッグブラインドを管理
       self.__stack = stack                     #スタックを管理
-      self.__playerlimit = playerlimit         #人数上限を管理
+      self.__maxplayers = maxplayers           #人数上限を管理
       self.__dealeridx = 0                     #ボタンのポジションを管理
       self.__sbidx = 0                         #sbのポジションを管理
       self.__bbidx = 0                         #bbのポジションを管理
@@ -143,8 +143,8 @@ class Table:
       return self.__stack
    
    @property
-   def playerlimit(self):
-      return self.__playerlimit
+   def maxplayers(self):
+      return self.__maxplayers
    
    @property
    def dealeridx(self):
@@ -186,9 +186,9 @@ class Table:
    def stack(self, value):
       self.__stack = value
 
-   @playerlimit.setter
-   def playerlimit(self, value):
-      self.__playerlimit = value
+   @maxplayers.setter
+   def maxplayers(self, value):
+      self.__maxplayers = value
 
    @dealeridx.setter
    def dealeridx(self, value):
@@ -221,11 +221,11 @@ class Table:
    # 管理用
    def __str__(self) -> str:
       player_info = "\n".join(str(player) for player in self.players)
-      return f"■テーブル情報\nsb_amount:{self.sbamount}\nbb_amount:{self.bbamount}\nBTN:{self.players[self.dealeridx].name}\nSB:{self.players[self.sbidx].name}\nBB:{self.players[self.bbidx].name}\n初期スタック{self.stack}\n人数制限:{self.playerlimit}\nコミュニティカード:{self.community}\nPOT:{self.pot}\n■プレイヤー情報\n{player_info}"
+      return f"■テーブル情報\nsb_amount:{self.sbamount}\nbb_amount:{self.bbamount}\nBTN:{self.players[self.dealeridx].name}\nSB:{self.players[self.sbidx].name}\nBB:{self.players[self.bbidx].name}\n初期スタック{self.stack}\n人数制限:{self.maxplayers}\nコミュニティカード:{self.community}\nPOT:{self.pot}\n■プレイヤー情報\n{player_info}"
 
    # テーブルにプレイヤーを追加する
    def add_player(self, player):
-      if self.playerlimit > len(self.players):
+      if self.maxplayers > len(self.players):
          self.players.append(player)
          player.stack = self.stack
       else:
@@ -290,7 +290,7 @@ class Table:
    #ショーダウン
    def showdown(self):
       winneridx = 0
-      for i in range(self.playerlimit):
+      for i in range(self.maxplayers):
          if self.players[i].status == "Active":
             if cards_score(self.players[winneridx].hand + self.community)[1:] < cards_score(self.players[i].hand + self.community)[1:]:
                winneridx = i
