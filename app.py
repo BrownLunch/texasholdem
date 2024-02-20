@@ -13,5 +13,9 @@ def index():
 def handle_menu():
     emit("menu")
 
+@socketio.on("join")
+def join_room():
+    pass
+
 if __name__ == "__main__":
     socketio.run(app, port=50002, debug=True)

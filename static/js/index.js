@@ -126,8 +126,9 @@ $("#think300-btn").on("mousedown", function(){
     changethinkbtn();
 })
 
-//ゲーム画面への遷移
+//ゲーム＆待機画面への遷移
 $(".create-btn").on("mousedown", function(){
+    socket.emit("join", {});
     $(".createroom-container").css("display", "none");
     $(".menu-container").css("display", "none");
     $(".game-container").css("display", "block");
