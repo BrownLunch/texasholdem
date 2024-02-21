@@ -88,6 +88,8 @@ $(".minus").on("mousedown", function(){
 })
 
 //部屋作成ボタンのラジオボタン系処理
+
+//初期スタック数のラジオボタン処理
 $("#chip10000-btn").on("mousedown", function(){
     $("input[value='10000']").prop("checked", true);
     changechipbtn();
@@ -105,6 +107,7 @@ $("#chip30000-btn").on("mousedown", function(){
     changechipbtn();
 })
 
+//長考時間のラジオボタン処理
 $("#think15-btn").on("mousedown", function(){
     $("input[value='15']").prop("checked", true);
     changethinkbtn();
@@ -134,6 +137,7 @@ $(".create-btn").on("mousedown", function(){
     $(".game-container").css("display", "block");
 })
 
+//初期スタック数の初期化
 function initchipbtn(){
     $("#chip10000").prop("checked", true);
     $("input[name='chipnum']").each(function(idx){
@@ -144,6 +148,8 @@ function initchipbtn(){
         }
     })
 }
+
+//長考時間の初期化
 function initthinkbtn(){
     $("#think15").prop("checked", true);
     $("input[name='thinktime']").each(function(idx){
@@ -155,6 +161,7 @@ function initthinkbtn(){
     })
 }
 
+//初期スタック数の選択
 function changechipbtn(){
     $("input[name='chipnum']").each(function(idx){
         if($(this).prop("checked")){
@@ -165,6 +172,7 @@ function changechipbtn(){
     })
 }
 
+//長考時間の選択
 function changethinkbtn(){
     $("input[name='thinktime']").each(function(idx){
         if($(this).prop("checked")){
@@ -206,14 +214,20 @@ $(".modalclose-btn").on("click", function(){
 })
 
 //部屋参加キーパッド関連
+
+//数字
 $(".keypad-digit").on("mousedown", function(){
     if($(".roomnum-txt").text().length < 5){
         $(".roomnum-txt").append($(this).text());
     }
 })
+
+//Cボタン
 $(".keypad-clear").on("mousedown", function(){
     $(".roomnum-txt").text("");
 })
+
+//一文字消すボタン
 $(".keypad-back").on("mousedown", function(){
     if($(".roomnum-txt").text().length > 0){
         $(".roomnum-txt").text($(".roomnum-txt").text().slice(0, -1))
