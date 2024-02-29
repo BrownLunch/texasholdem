@@ -115,7 +115,6 @@ class Player:
    def __str__(self) -> str:
       return f"name:{self.name} stack:{self.stack} bet:{self.bet} status:{self.status} hand:{self.hand} action:{self.action}"
       
-
 class Table:
    def __init__(self, sb, bb, stack, maxplayers):
       self.__sbamount = sb                     #スモールブラインドを管理
@@ -258,7 +257,7 @@ class Table:
 
    
    # ベッティングラウンド
-   def bettinground(self, startidx):
+   def bettinground(self):
       pass
 
    # プリフロップ
@@ -296,8 +295,14 @@ class Table:
                winneridx = i
       print(f"{self.players[winneridx].name}の勝利!!!")
 
+#現在、対戦が行われている部屋番号とtableクラスを格納する
+# activeroom = {}
 
-
+# def roomnumber_creater(existnumber):
+#    roomnumberstorage = set([str(x).zfill(5) for x in range(100000)])
+#    existnumber = set(activeroom.keys())
+#    assignablenumber = roomnumberstorage - existnumber
+#    return random.choice(list(assignablenumber))
 
 if __name__ == "__main__":
    table = Table(50, 100, 10000, 6)
@@ -310,3 +315,4 @@ if __name__ == "__main__":
    table.choose_dealer() 
    table.game()
    print(table)
+   roomnumber_creater(1)
