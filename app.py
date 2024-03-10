@@ -26,7 +26,6 @@ def join(data):
 
     #検索した部屋が存在していたら入室する
     for i in range(len(ROOMS)):
-        print(ROOMS[i].roomno)
         if ROOMS[i].roomno == iroomno:
             join_room(ROOMS[i].roomno, request.sid)
             ROOMS[i].add_player(Player(data["username"], request.sid))
@@ -34,11 +33,24 @@ def join(data):
             break
     else:
         emit("message", "部屋が見つかりませんでした。")
-    print(ROOMS[i])
 
 @socketio.on("leave_room")
 def leave():
     pass
+
+@socketio.on("start_game")
+def start(data):
+    rm = ""
+    for i in range(len(ROOMS)):
+        if  ROOMS[i].roomno == data["roomno"]:
+            rm = ROOMS[i]
+            break
+    else:
+        print("部屋が削除されました。")
+
+    rm.choose_dealer()
+    print(rm)
+    
 
 def choiceroomno():
     roomnolist = list(range(100000))

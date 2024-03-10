@@ -247,6 +247,11 @@ $(".join-btn").on("mousedown", function(){
     }
 })
 
+$(".start-game").on("click", function(){
+    console.log("clicked");
+    socket.emit("start_game", {"roomno":roomno});
+})
+
 socket.on("after_create_room", (data) =>{
     let createdroomno = data["createroomno"];
     socket.emit("join_room", {username:"いちろう", roomno:createdroomno});
@@ -267,3 +272,5 @@ socket.on("after_join_room", (data) =>{
     $(".room-no").text(roomno);     
     console.log(data["username"] + "が" + roomno + "に入室しました。")
 })
+
+socket.on("after_start_game")
