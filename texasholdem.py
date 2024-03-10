@@ -141,6 +141,7 @@ class Table:
       self.__players = []                      #プレイヤー情報を格納する配列を管理
       self.__deck = Deck()                     #山札を管理
       self.__roomno = roomno                   #ルームナンバーを管理
+      self.__round = ""
 
    @property
    def sbamount(self):
