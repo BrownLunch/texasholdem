@@ -5,6 +5,8 @@
 import random
 from determine import cards_score
 
+ROOMS = []
+
 # Cardクラスを作成
 class Card:
    def __init__(self, suit, rank):
@@ -45,14 +47,14 @@ class Deck(list):
       return dealcard
 
 class Player:
-   def __init__(self, name):
+   def __init__(self, name, sessionid):
       self.__name = name      
       self.__stack = 0
       self.__hand = []
       self.__bet = 0
-      self.__status = "Active"        #プレイヤーが対戦中かすでに負けているか(Active, Defeted)を管理するプロパティ
+      self.__status = "Active"       #プレイヤーが対戦中かすでに負けているか(Active, Defeted)を管理するプロパティ
       self.__action = ""             #プレイヤーのアクション(call, raise, fold, allin, check)を管理するプロパティ
-      #ここにセッションIDを追加
+      self.__sessionid = sessionid   #セッションIDを管理するプロパティ
    
    @property
    def name(self):
@@ -78,6 +80,10 @@ class Player:
    def action(self):
       return self.__action
    
+   @property
+   def sessionid(self):
+      return self.__sessionid
+   
    @name.setter
    def name(self, value):
       self.__name = value
@@ -101,6 +107,10 @@ class Player:
    @action.setter
    def action(self, value):
       self.__action = value
+
+   @sessionid.setter
+   def sessionid(self, value):
+      self.__sessionid = value
                             
    # ベットする
    def betting(self, betamount):
@@ -113,10 +123,11 @@ class Player:
 
    # 管理用
    def __str__(self) -> str:
-      return f"name:{self.name} stack:{self.stack} bet:{self.bet} status:{self.status} hand:{self.hand} action:{self.action}"
+      return f"name:{self.name} stack:{self.stack} bet:{self.bet} status:{self.status} hand:{self.hand} action:{self.action} sessionid:{self.sessionid}"
       
 class Table:
-   def __init__(self, sb, bb, stack, maxplayers):
+   
+   def __init__(self, sb, bb, stack, maxplayers, roomno):
       self.__sbamount = sb                     #スモールブラインドを管理
       self.__bbamount = bb                     #ビッグブラインドを管理
       self.__stack = stack                     #スタックを管理
@@ -128,6 +139,8 @@ class Table:
       self.__minimumraise = 0                  #ミニマムレイズを管理
       self.__community = []                    #コミュニティカード配列を管理
       self.__players = []                      #プレイヤー情報を格納する配列を管理
+      self.__deck = Deck()                     #山札を管理
+      self.__roomno = roomno                   #ルームナンバーを管理
 
    @property
    def sbamount(self):
@@ -173,6 +186,14 @@ class Table:
    def players(self):
       return self.__players
    
+   @property
+   def deck(self):
+      return self.__deck
+   
+   @property
+   def roomno(self):
+      return self.__roomno
+   
    @sbamount.setter
    def sbamount(self, value):
       self.__sbamount = value
@@ -217,10 +238,18 @@ class Table:
    def players(self, value):
       self.__players = value
 
+   @deck.setter
+   def deck(self, value):
+      self.__deck = value
+
+   @roomno.setter
+   def roomno(self, value):
+      self.__roomno = value
+
    # 管理用
    def __str__(self) -> str:
       player_info = "\n".join(str(player) for player in self.players)
-      return f"■テーブル情報\nsb_amount:{self.sbamount}\nbb_amount:{self.bbamount}\nBTN:{self.players[self.dealeridx].name}\nSB:{self.players[self.sbidx].name}\nBB:{self.players[self.bbidx].name}\n初期スタック{self.stack}\n人数制限:{self.maxplayers}\nコミュニティカード:{self.community}\nPOT:{self.pot}\n■プレイヤー情報\n{player_info}"
+      return f"■テーブル情報\nroomno:{self.roomno}\nsb_amount:{self.sbamount}\nbb_amount:{self.bbamount}\nBTN:{self.players[self.dealeridx].name}\nSB:{self.players[self.sbidx].name}\nBB:{self.players[self.bbidx].name}\n初期スタック{self.stack}\n人数制限:{self.maxplayers}\nコミュニティカード:{self.community}\nPOT:{self.pot}\n■プレイヤー情報\n{player_info}"
 
    # テーブルにプレイヤーを追加する
    def add_player(self, player):
@@ -249,7 +278,6 @@ class Table:
       self.turn(deck)
       self.river(deck)
       self.showdown()
-
 
    # コミュニティーカードを受け取る
    def recieve_community(self, cards):
@@ -294,15 +322,7 @@ class Table:
             if cards_score(self.players[winneridx].hand + self.community)[1:] < cards_score(self.players[i].hand + self.community)[1:]:
                winneridx = i
       print(f"{self.players[winneridx].name}の勝利!!!")
-
-#現在、対戦が行われている部屋番号とtableクラスを格納する
-# activeroom = {}
-
-# def roomnumber_creater(existnumber):
-#    roomnumberstorage = set([str(x).zfill(5) for x in range(100000)])
-#    existnumber = set(activeroom.keys())
-#    assignablenumber = roomnumberstorage - existnumber
-#    return random.choice(list(assignablenumber))
+   
 
 if __name__ == "__main__":
    table = Table(50, 100, 10000, 6)
@@ -315,4 +335,3 @@ if __name__ == "__main__":
    table.choose_dealer() 
    table.game()
    print(table)
-   roomnumber_creater(1)

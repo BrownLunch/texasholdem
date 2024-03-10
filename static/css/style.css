@@ -499,3 +499,12 @@ input[type="radio"]{
     width: 90%;
     height: auto;
 }
+.room-no{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 95%;
+    left: 5%;
+    font-size: 3vw;
+    color: #fff;
+
+}

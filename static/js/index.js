@@ -1,5 +1,11 @@
 let socket = io();
 
+let roomno;
+
+socket.on("messege", (msg) =>{
+    console.log(msg);
+})
+
 socket.on("menu", () => {
     $(".title-container").css("display", "none")
     $(".menu-container").css("display", "flex")
@@ -131,7 +137,7 @@ $("#think300-btn").on("mousedown", function(){
 
 //ゲーム＆待機画面への遷移
 $(".create-btn").on("mousedown", function(){
-    socket.emit("join", {});
+    socket.emit("create_room", {maxplayers:$(".player-num").text(), chip:$("input[name='chipnum']:checked").val(), thinktime:$("input[name='thinktime']:checked").val()});
     $(".createroom-container").css("display", "none");
     $(".menu-container").css("display", "none");
     $(".game-container").css("display", "block");
@@ -234,9 +240,30 @@ $(".keypad-back").on("mousedown", function(){
     }
 })
 
+$(".join-btn").on("mousedown", function(){
+    if ($(".roomnum-txt").text().length == 5){
+        socket.emit("join_room", {username:"たけし", roomno:$(".roomnum-txt").text()});
+        
+    }
+})
+
+socket.on("after_create_room", (data) =>{
+    let createdroomno = data["createroomno"];
+    socket.emit("join_room", {username:"いちろう", roomno:createdroomno});
+    
+})
+
+socket.on("after_join_room", (data) =>{
+    roomno = data["roomno"];
+
+    //メニュー画面からゲーム画面に切り替える
+    $(".roomnum-txt").text("");
+    $(".modal-content").removeClass("open");
+    $(".modal-content").addClass("close");
+    $(".menu-container").css("display", "none");
+    $(".game-container").css("display", "block");
 
 
-
-
-
-
+    $(".room-no").text(roomno);     
+    console.log(data["username"] + "が" + roomno + "に入室しました。")
+})
