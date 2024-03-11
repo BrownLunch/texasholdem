@@ -141,7 +141,7 @@ class Table:
       self.__players = []                      #プレイヤー情報を格納する配列を管理
       self.__deck = Deck()                     #山札を管理
       self.__roomno = roomno                   #ルームナンバーを管理
-      self.__round = ""
+      self.__round = ""                        #ゲームのラウンドを管理
 
    @property
    def sbamount(self):
@@ -195,6 +195,10 @@ class Table:
    def roomno(self):
       return self.__roomno
    
+   @property
+   def round(self):
+      return self.__round
+   
    @sbamount.setter
    def sbamount(self, value):
       self.__sbamount = value
@@ -247,10 +251,14 @@ class Table:
    def roomno(self, value):
       self.__roomno = value
 
+   @round.setter
+   def round(self, value):
+      self.__round = value
+
    # 管理用
    def __str__(self) -> str:
       player_info = "\n".join(str(player) for player in self.players)
-      return f"■テーブル情報\nroomno:{self.roomno}\nsb_amount:{self.sbamount}\nbb_amount:{self.bbamount}\nBTN:{self.players[self.dealeridx].name}\nSB:{self.players[self.sbidx].name}\nBB:{self.players[self.bbidx].name}\n初期スタック{self.stack}\n人数制限:{self.maxplayers}\nコミュニティカード:{self.community}\nPOT:{self.pot}\n■プレイヤー情報\n{player_info}"
+      return f"■テーブル情報\nroomno:{self.roomno}\nround:{self.round}\nsb_amount:{self.sbamount}\nbb_amount:{self.bbamount}\nBTN:{self.players[self.dealeridx].name}\nSB:{self.players[self.sbidx].name}\nBB:{self.players[self.bbidx].name}\n初期スタック{self.stack}\n人数制限:{self.maxplayers}\nコミュニティカード:{self.community}\nPOT:{self.pot}\n■プレイヤー情報\n{player_info}"
 
    # テーブルにプレイヤーを追加する
    def add_player(self, player):
@@ -270,6 +278,12 @@ class Table:
    def pay_sbbb(self):
       self.players[self.sbidx].betting(self.sbamount)
       self.players[self.bbidx].betting(self.bbamount)
+
+   #　ハンドを配る
+   def deal_hand(self):
+      for pr in self.players:
+         if pr.status == "Active":
+            pr.receive_hand(self.deck.deal_card(2))
 
    # ゲーム
    def game(self):

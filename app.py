@@ -48,8 +48,18 @@ def start(data):
     else:
         print("部屋が削除されました。")
 
+    #BTN(親を決める)
     rm.choose_dealer()
+
+    #sb, bbを払う
+    rm.pay_sbbb()
+
+    #カードを生存しているプレイヤー全員に配る
+    rm.deal_hand()
+
     print(rm)
+
+    emit("")
     
 
 def choiceroomno():

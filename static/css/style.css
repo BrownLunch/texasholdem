@@ -512,3 +512,61 @@ input[type="radio"]{
     font-size: 3vw;
     color: #fff;
 }
+.player-window{
+    width: 100%;
+    height: auto;
+}
+.center-bottom-player{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 80%;
+    left: 62%;
+    width: 16%;
+    height: auto;
+    z-index: 3;
+}
+.left-bottom-player{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 61%;
+    left: 10%;
+    width: 15%;
+    height: auto;
+    z-index: 3;
+}
+.left-top-player{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 80%;
+    left: 62%;
+    width: 15%;
+    height: auto;
+    z-index: 3;
+}
+.center-top-player{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 80%;
+    left: 62%;
+    width: 15%;
+    height: auto;
+    z-index: 3;
+}
+.right-top-player{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 80%;
+    left: 62%;
+    width: 15%;
+    height: auto;
+    z-index: 3;
+}
+.right-bottom-player{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 80%;
+    left: 62%;
+    width: 15%;
+    height: auto;
+    z-index: 3;
+}
