@@ -275,9 +275,9 @@ class Table:
    def pot(self, value):
       self.__pot = value
 
-   @pot.setter
+   @minimumraise.setter
    def minimumraise(self, value):
-      self.__pot = value
+      self.__minimumraise = value
 
    @community.setter
    def community(self, value):
@@ -322,7 +322,9 @@ class Table:
    def pay_sbbb(self):
       self.players[self.sbidx].betting(self.sbamount)
       self.players[self.bbidx].betting(self.bbamount)
-      self.pot = self.sbamount + self.bbamount
+      self.pot += self.sbamount + self.bbamount
+      self.maxbet = self.bbamount
+      self.minimumraise = self.bbamount * 2
 
    #　ハンドを配る
    def deal_hand(self):
@@ -382,6 +384,16 @@ class Table:
             if cards_score(self.players[winneridx].hand + self.community)[1:] < cards_score(self.players[i].hand + self.community)[1:]:
                winneridx = i
       print(f"{self.players[winneridx].username}の勝利!!!")
+
+   #行動し終わったプレイヤーのインデックスを検索
+   def search_actedplayeridx(self, sid):
+    idx = 0
+    for i in range(len(self.players)):
+        if sid == self.players[i].sessionid:
+            idx = i
+            break
+    return idx
+
    
 
 if __name__ == "__main__":

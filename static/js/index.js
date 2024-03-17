@@ -1,5 +1,5 @@
 let socket = io();
-let sessionid;
+let mysessionid;
 let roomno;
 
 socket.on("messege", (msg) =>{
@@ -7,9 +7,9 @@ socket.on("messege", (msg) =>{
 })
 
 socket.on("connect", () => {
-    sessionid = socket.id;
+    mysessionid = socket.id;
     console.log("Hello Poker.io!")
-    console.log(sessionid)
+    console.log(mysessionid)
 })
 
 socket.on("menu", () => {
@@ -256,7 +256,7 @@ $(".join-btn").on("mousedown", function(){
 function sort_players(players){
     let myidx
     for (let i = 0; i < players.length; i++){
-        if (sessionid == players[i]["sessionid"]){
+        if (mysessionid == players[i]["sessionid"]){
             myidx = i;
             break;
         }
@@ -294,7 +294,7 @@ function game_start_update_display(rm, pls){
     //配られたカードを表示(自分以外は裏面を表示、敗北しているプレイヤーは非表示)
     for(let i = 0; i < pls.length; i++){
         if (pls[i]["status"] == "Active"){           
-            if (pls[i]["sessionid"] == sessionid){
+            if (pls[i]["sessionid"] == mysessionid){
                 $(".hand").eq(i * 2).attr("src", "../static/images/cards/" + pls[i]["hand"][0] + ".png");
                 $(".hand").eq((i * 2) + 1).attr("src", "../static/images/cards/" + pls[i]["hand"][1] + ".png");
             }else{
@@ -306,7 +306,6 @@ function game_start_update_display(rm, pls){
             $(".hand").eq((i * 2) + 1).attr("src", "");
         }
     }
-    console.log(rm)
 
     //プレイヤーのスタックを更新
     for(let i = 0; i < pls.length; i++){
@@ -369,8 +368,47 @@ socket.on("echo_start_game", (data) =>{
 })
 
 socket.on("action", (data) => {
-    rm = data["room"];
-    pls = data["players"];
-    console.log("俺の番")
+    //jsonを受け取りjavascriptの配列に変換
+    players = sort_players(JSON.parse(data["players"]));
+    room = JSON.parse(data["room"]);
+
+    //左のアクションボタンについてのふるまい
+    if(data["reqcallamount"] > 0){
+        $(".fold").css("visibility", "visible")
+    }else{
+        $(".fold").css("visibility", "hidden");
+    }
+
+    //中央のアクションボタンについてのふるまい
+    if(data["reqcallamount"] > 0){
+        $(".call-amount").text(data["reqcallamount"]);
+        $(".check-txt").css("display", "none");
+        $(".call-txt").css("display", "block");
+        
+    }else{
+        $(".call-amount").text("");
+        $(".check-txt").css("display", "block");
+        $(".call-txt").css("display", "none");
+    }
+
+    //右のアクションボタンについてのふるまい
+    if(room["round"] == "preflop"){
+        if (data["reqbetamount"] < players[0]["stack"]){
+            $(".raise-txt").css("display", "block");
+            $(".bet-txt").css("display", "none");
+            $(".allin-txt").css("display", "none");
+        }else{
+            $(".raise-txt").css("display", "none");
+            $(".bet-txt").css("display", "none");
+            $(".allin-txt").css("display", "block");
+        }
+        $(".bet-amount").text(data["reqbetamount"]);
+    }
+
     $(".action-bar").css("display", "grid");
+})
+
+$("fold-btn").on("click", () =>{
+    $("action-bar").css("display", "none");
+    socket.emit("bettinground", {roomno:roomno, sessionid:mysessionid, action:"Fold"})
 })

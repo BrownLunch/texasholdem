@@ -63,17 +63,25 @@ input[type="radio"]{
     flex-direction: column;
     justify-content: center;
 }
+.title{
+    pointer-events: none;
+}
 #title-img{
     width: 50%;
     height: auto;
     margin: 0 auto;
     display: block;
+    pointer-events: none;
+}
+.title-nav{
+    pointer-events: none;
 }
 #title-nav-img{
     width: 80%;
     margin: 0 auto;
     display: block;
     animation: flash 1.5s linear infinite;
+    pointer-events: none;
 }
 @keyframes flash {
 	0%, 100%{
@@ -220,6 +228,7 @@ input[type="radio"]{
     width: auto;
     height: 80%;
     margin-left: 2%;
+    pointer-events: none;
 }
 .createroom-content{
     width: 100%;
@@ -269,6 +278,7 @@ input[type="radio"]{
     top: 51%;
     left: 8%;
     z-index: 3;  
+    pointer-events: none;
 }
 .player-unit{
     position: absolute;
@@ -279,6 +289,7 @@ input[type="radio"]{
     top: 51%;
     left: 11.5%;
     z-index: 3;  
+    pointer-events: none;
 }
 .plus{
     position: absolute;
@@ -436,11 +447,13 @@ input[type="radio"]{
     display: block;
     margin: 0 auto;
     filter: drop-shadow(0.1vw 0.1vw 0.1vw rgba(0,0,0,1));
+    pointer-events: none;
 }
 .joinroom-keypad-display{
     position: relative;
     width: 60%;
     height: auto;
+    pointer-events: none;
 }
 .roomnum-txt{
     position: absolute;
@@ -716,7 +729,6 @@ input[type="radio"]{
     height: auto;
 }
 .gather-bet{
-    display: none;
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;
@@ -750,7 +762,6 @@ input[type="radio"]{
     width: 100%;
     height: auto;
 }
-
 .action-txt1{
     position: absolute;
     transform: translate(-50%, -50%);
@@ -760,6 +771,7 @@ input[type="radio"]{
     font-weight: bold;
     color: #fff;
     text-shadow:0.2vw 0.2vw 0.2vw #000;
+    pointer-events: none;
 }
 .action-txt2{
     position: absolute;
@@ -770,15 +782,7 @@ input[type="radio"]{
     font-weight: bold;
     color: #fff;
     text-shadow:0.2vw 0.2vw 0.2vw #000;
-}
-.fold-txt{
-    display: none;
-}
-.raise-txt{
-    display: none;
-}
-.allin-txt{
-    display: none;
+    pointer-events: none;
 }
 .action-amount{
     position: absolute;

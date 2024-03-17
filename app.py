@@ -52,13 +52,8 @@ def leave():
 
 @socketio.on("start_game")
 def start(data):
-    rm = ""
-    for i in range(len(ROOMS)):
-        if  ROOMS[i].roomno == data["roomno"]:
-            rm = ROOMS[i]
-            break
-    else:
-        print("部屋が削除されました。")
+    #部屋を検索
+    rm = searchroom(data["roomno"])
 
     #BTN(親を決める)
     rm.choose_dealer()
@@ -77,20 +72,35 @@ def start(data):
     
 @socketio.on("preflop")
 def preflop(data):
+    #部屋を検索
     rm = searchroom(data["roomno"])
+
+    #ラウンドをプリフロップに更新
     rm.round = "preflop"
-    startplayeridx = rm.bbidx + 1 % len(rm.players)
+
+    #最初に行動を行うプレイヤーを探す(未完成；生存チェック)
+    startplayeridx = (rm.bbidx + 1) % len(rm.players)
     startplayer = rm.players[startplayeridx].sessionid
+
+    reqcallamount = rm.maxbet - rm.players[startplayeridx].bet
+    reqbetamount = rm.minimumraise - rm.players[startplayeridx].bet
 
     # json形式に書き換え
     room = json.dumps(rm, default=Table_encoder)
     players = json.dumps(rm.players, default=Player_encoder)
-
-    emit("action", {"room":room, "players":players}, room=startplayer)
+    
+    emit("action", {"room":room, "players":players, "reqcallamount":reqcallamount, "reqbetamount": reqbetamount}, room=startplayer)
 
 @socketio.on("bettinground")
 def bettinground(data):
-    pass
+    #部屋を検索
+    rm = searchroom(data["roomno"])
+    #行動したプレイヤーのアクションを記録
+    actedplayeridx = rm.search_actedplayeridx(data["sessionid"])
+    rm.players[actedplayeridx].action = data["action"]
+    #次に行動するプレイヤーを検索
+
+    
 
 def choiceroomno():
     roomnolist = list(range(100000))
