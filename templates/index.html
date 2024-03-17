@@ -56,7 +56,7 @@
                 <div class="createroom-choose-container">
                     <div class="createroom-counter">
                         <div class="minus">－</div>
-                        <div class="player-num">2</div>
+                        <div class="player-num">6</div>
                         <div class="player-unit">人</div>
                         <img class="createroom-counter-img" src="../static/images/playerlimit.png">
                         <div class="plus">+</div>
@@ -120,23 +120,84 @@
             <img class="pokertable" src="../static/images/table.png">
             <div class="room-no"></div>
             <div class="start-game">gamestart</div>
-            <div class="center-bottom-player">
-                <img class="player-window" src="../static/images/playerwindow.png">
+            <div class="center-bottom-player player-window">
+                <img class="player-window-img" src="../static/images/playerwindow.png">
+                <div class="stack center-bottom-stack"></div>
+                <div class="username center-bottom-username"></div>
+                <img class="hand hand1 center-bottom-hand1">
+                <img class="hand hand2 center-bottom-hand2">
+                <div class="bet center-bottom-bet"></div>
             </div>
-            <div class="left-bottom-player">
-                <img class="player-window" src="../static/images/playerwindow.png">
+            <div class="left-bottom-player player-window">
+                <img class="player-window-img" src="../static/images/playerwindow.png">
+                <div class="stack"></div>
+                <div class="username"></div>
+                <img class="hand hand1">
+                <img class="hand hand2">
+                <div class="bet left-bottom-bet"></div>
             </div>
-            <div class="left-top-player">
-                <img class="player-window" src="../static/images/playerwindow.png">
+            <div class="left-top-player player-window">
+                <img class="player-window-img" src="../static/images/playerwindow.png">
+                <div class="stack"></div>
+                <div class="username"></div>
+                <img class="hand hand1">
+                <img class="hand hand2">
+                <div class="bet left-top-bet"></div>
             </div>
-            <div class="center-top-player">
-                <img class="player-window" src="../static/images/playerwindow.png">
+            <div class="center-top-player player-window">
+                <img class="player-window-img" src="../static/images/playerwindow.png">
+                <div class="stack"></div>
+                <div class="username"></div>
+                <img class="hand hand1">
+                <img class="hand hand2">
+                <div class="bet center-top-bet"></div>
             </div>
-            <div class="right-top-player">
-                <img class="player-window" src="../static/images/playerwindow.png">
+            <div class="right-top-player player-window">
+                <img class="player-window-img" src="../static/images/playerwindow.png">
+                <div class="stack"></div>
+                <div class="username"></div>
+                <img class="hand hand1">
+                <img class="hand hand2">
+                <div class="bet right-top-bet"></div>
             </div>
-            <div class="right-bottom-player">
-                <img class="player-window" src="../static/images/playerwindow.png">
+            <div class="right-bottom-player player-window">
+                <img class="player-window-img" src="../static/images/playerwindow.png">
+                <div class="stack"></div>
+                <div class="username"></div>
+                <img class="hand hand1">
+                <img class="hand hand2">
+                <div class="bet right-bottom-bet"></div>
+            </div>
+            <div class="pot"></div>
+            <div class="community-area">
+                <img class="community community1">
+                <img class="community community2">
+                <img class="community community3">
+                <img class="community community4">
+                <img class="community community5">
+            </div>
+            <div class="gather-bet"></div>
+            <div class="action-bar">
+                <!-- チェックフォールドボタン -->
+                <div class="action checkfold">
+                    <img class="action-btn checkfold-btn" src="../static/images/action.png">
+                    <div class="action-txt1 check-txt">Check</div>
+                    <div class="action-txt1 fold-txt">Fold</div>
+                </div>
+                <!-- コールボタン -->
+                <div class="action call">
+                    <img class="action-btn call-btn" src="../static/images/action.png">
+                    <div class="action-txt2 call-txt">Call</div>
+                    <div class="action-amount call-amount"></div>
+                </div>
+                <!-- レイズオールインベットボタン -->
+                <div class="action betraiseallin">
+                    <img class="action-btn betraiseallin-btn" src="../static/images/action.png">
+                    <div class="action-txt2 bet-txt">Bet</div>
+                    <div class="action-txt2 raise-txt">Raise</div>
+                    <div class="action-txt2 allin-txt">Allin</div>
+                    <div class="action-amount bet-amount"></div>
+                </div>               
             </div>
         </div>
         <div class="modal-overlay"></div>

@@ -1,9 +1,15 @@
 let socket = io();
-
+let sessionid;
 let roomno;
 
 socket.on("messege", (msg) =>{
     console.log(msg);
+})
+
+socket.on("connect", () => {
+    sessionid = socket.id;
+    console.log("Hello Poker.io!")
+    console.log(sessionid)
 })
 
 socket.on("menu", () => {
@@ -137,7 +143,7 @@ $("#think300-btn").on("mousedown", function(){
 
 //ゲーム＆待機画面への遷移
 $(".create-btn").on("mousedown", function(){
-    socket.emit("create_room", {maxplayers:$(".player-num").text(), chip:$("input[name='chipnum']:checked").val(), thinktime:$("input[name='thinktime']:checked").val()});
+    socket.emit("create_room", {maxplayers:$(".player-num").text(), chip:$("input[name='chipnum']:checked").val(), thinktime:$("input[name='thinktime']:checked").val(), username:"一郎"});
     $(".createroom-container").css("display", "none");
     $(".menu-container").css("display", "none");
     $(".game-container").css("display", "block");
@@ -242,35 +248,129 @@ $(".keypad-back").on("mousedown", function(){
 
 $(".join-btn").on("mousedown", function(){
     if ($(".roomnum-txt").text().length == 5){
-        socket.emit("join_room", {username:"たけし", roomno:$(".roomnum-txt").text()});
+        socket.emit("join_room", {username:"たけし", roomno:$(".roomnum-txt").text(), host:"0"});
         
     }
 })
 
+function sort_players(players){
+    let myidx
+    for (let i = 0; i < players.length; i++){
+        if (sessionid == players[i]["sessionid"]){
+            myidx = i;
+            break;
+        }
+    }
+    sorted_players = []
+    for (let i = 0; i < players.length; i++){
+        sorted_players.push(players[myidx]);
+        if(myidx < players.length - 1){
+            myidx++
+        }else{
+            myidx = 0
+        }
+    }
+
+    return sorted_players
+}
+
+function standby_update_display(rm, pls){
+    $(".room-no").text(rm["roomno"])
+
+    //参加人数の分プレイヤーウィンドウを表示する
+    $(".player-window:lt("+ pls.length +")").css("display", "block");
+
+    for(let i=0; i < pls.length; i++){
+        stack = pls[i]["stack"].toLocaleString()
+        $(".stack").eq(i).text(stack);
+        $(".username").eq(i).text(pls[i]["username"]);
+    }
+
+}
+
+function game_start_update_display(rm, pls){
+    $(".start-game").css("display", "none");
+
+    //配られたカードを表示(自分以外は裏面を表示、敗北しているプレイヤーは非表示)
+    for(let i = 0; i < pls.length; i++){
+        if (pls[i]["status"] == "Active"){           
+            if (pls[i]["sessionid"] == sessionid){
+                $(".hand").eq(i * 2).attr("src", "../static/images/cards/" + pls[i]["hand"][0] + ".png");
+                $(".hand").eq((i * 2) + 1).attr("src", "../static/images/cards/" + pls[i]["hand"][1] + ".png");
+            }else{
+                $(".hand").eq(i * 2).attr("src", "../static/images/cards/back.png");
+                $(".hand").eq((i * 2) + 1).attr("src", "../static/images/cards/back.png");
+            }
+        }else{
+            $(".hand").eq(i * 2).attr("src", "");
+            $(".hand").eq((i * 2) + 1).attr("src", "");
+        }
+    }
+    console.log(rm)
+
+    //プレイヤーのスタックを更新
+    for(let i = 0; i < pls.length; i++){
+        $(".stack").eq(i).text(pls[i]["stack"].toLocaleString());
+    }
+
+    //プレイヤーのベットを更新
+    for(let i = 0;i < pls.length; i++){
+        if (pls[i]["bet"] > 0){
+            $(".bet").eq(i).text(pls[i]["bet"].toLocaleString());
+        }
+    }
+
+    //テーブルのポットを更新
+    $(".pot").text("Pot：" + rm["pot"].toLocaleString())
+
+}
+
 $(".start-game").on("click", function(){
-    console.log("clicked");
     socket.emit("start_game", {"roomno":roomno});
 })
 
-socket.on("after_create_room", (data) =>{
+socket.on("echo_create_room", (data) =>{
     let createdroomno = data["createroomno"];
-    socket.emit("join_room", {username:"いちろう", roomno:createdroomno});
+    let username = data["username"]
+    socket.emit("join_room", {username:username, roomno:createdroomno, host:"1"});
     
 })
 
-socket.on("after_join_room", (data) =>{
-    roomno = data["roomno"];
+socket.on("echo_join_room", (data) =>{
+    //jsonを受け取りjavascriptの配列に変換
+    players = sort_players(JSON.parse(data["players"]));
+    room = JSON.parse(data["room"]);
 
     //メニュー画面からゲーム画面に切り替える
     $(".roomnum-txt").text("");
     $(".modal-content").removeClass("open");
     $(".modal-content").addClass("close");
+    $(".modal-overlay").css("display", "none")
     $(".menu-container").css("display", "none");
     $(".game-container").css("display", "block");
 
+    roomno = room["roomno"];
 
-    $(".room-no").text(roomno);     
-    console.log(data["username"] + "が" + roomno + "に入室しました。")
+    standby_update_display(room, players);     
 })
 
-socket.on("after_start_game")
+socket.on("echo_start_game", (data) =>{
+    //jsonを受け取りjavascriptの配列に変換
+    players = sort_players(JSON.parse(data["players"]));
+    room = JSON.parse(data["room"]);
+
+    game_start_update_display(room, players);
+
+    console.log(players)
+    //部屋の製作者が代表して送信
+    if(players[0]["host"] == "1"){
+        socket.emit("preflop", {roomno: roomno});
+    }  
+})
+
+socket.on("action", (data) => {
+    rm = data["room"];
+    pls = data["players"];
+    console.log("俺の番")
+    $(".action-bar").css("display", "grid");
+})

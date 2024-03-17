@@ -45,20 +45,31 @@ class Deck(list):
          popcard = self.pop()
          dealcard.append(popcard.suit + popcard.rank)
       return dealcard
+   
+def Player_encoder(obj):
+   return {"username": obj.username, 
+           "stack": obj.stack, 
+           "hand": obj.hand, 
+           "bet": obj.bet, 
+           "status":obj.status, 
+           "action":obj.action, 
+           "host":obj.host,
+           "sessionid":obj.sessionid}
 
 class Player:
-   def __init__(self, name, sessionid):
-      self.__name = name      
+   def __init__(self, username, sessionid):
+      self.__username = username      
       self.__stack = 0
       self.__hand = []
       self.__bet = 0
       self.__status = "Active"       #プレイヤーが対戦中かすでに負けているか(Active, Defeted)を管理するプロパティ
       self.__action = ""             #プレイヤーのアクション(call, raise, fold, allin, check)を管理するプロパティ
       self.__sessionid = sessionid   #セッションIDを管理するプロパティ
+      self.__host = ""               #ルームの製作者かそうでないかを管理するプロパティ(1:製作者 0:参加者)
    
    @property
-   def name(self):
-      return self.__name
+   def username(self):
+      return self.__username
    
    @property
    def stack(self):
@@ -81,12 +92,16 @@ class Player:
       return self.__action
    
    @property
+   def host(self):
+      return self.__host
+   
+   @property
    def sessionid(self):
       return self.__sessionid
    
-   @name.setter
-   def name(self, value):
-      self.__name = value
+   @username.setter
+   def username(self, value):
+      self.__username = value
 
    @stack.setter
    def stack(self, value):
@@ -108,6 +123,10 @@ class Player:
    def action(self, value):
       self.__action = value
 
+   @host.setter
+   def host(self, value):
+      self.__host = value
+
    @sessionid.setter
    def sessionid(self, value):
       self.__sessionid = value
@@ -123,8 +142,24 @@ class Player:
 
    # 管理用
    def __str__(self) -> str:
-      return f"name:{self.name} stack:{self.stack} bet:{self.bet} status:{self.status} hand:{self.hand} action:{self.action} sessionid:{self.sessionid}"
-      
+      return f"username:{self.username} stack:{self.stack} bet:{self.bet} status:{self.status} hand:{self.hand} action:{self.action} host:{self.host} sessionid:{self.sessionid}"
+
+def Table_encoder(obj):
+   return {"sbamount": obj.sbamount,
+           "bbamount": obj.bbamount,
+           "stack": obj.stack,
+           "maxplayers": obj.maxplayers,
+           "dealeridx": obj.dealeridx,
+           "sbidx":obj.sbidx,
+           "bbidx":obj.bbidx,
+           "maxbet":obj.maxbet,
+           "pot": obj.pot,
+           "minimumraise": obj.minimumraise,
+           "community": obj.community,
+           "roomno": obj.roomno,
+           "round": obj.round
+           } 
+
 class Table:
    
    def __init__(self, sb, bb, stack, maxplayers, roomno):
@@ -135,6 +170,7 @@ class Table:
       self.__dealeridx = 0                     #ボタンのポジションを管理
       self.__sbidx = 0                         #sbのポジションを管理
       self.__bbidx = 0                         #bbのポジションを管理
+      self.__maxbet = 0                        #最大ベット額を管理
       self.__pot = 0                           #初期ポットを管理
       self.__minimumraise = 0                  #ミニマムレイズを管理
       self.__community = []                    #コミュニティカード配列を管理
@@ -170,6 +206,10 @@ class Table:
    @property
    def bbidx(self):
       return self.__bbidx
+   
+   @property
+   def maxbet(self):
+      return self.__maxbet
    
    @property
    def pot(self):
@@ -227,6 +267,10 @@ class Table:
    def bbidx(self, value):
       self.__bbidx = value
 
+   @maxbet.setter
+   def maxbet(self, value):
+      self.__maxbet = value
+
    @pot.setter
    def pot(self, value):
       self.__pot = value
@@ -258,7 +302,7 @@ class Table:
    # 管理用
    def __str__(self) -> str:
       player_info = "\n".join(str(player) for player in self.players)
-      return f"■テーブル情報\nroomno:{self.roomno}\nround:{self.round}\nsb_amount:{self.sbamount}\nbb_amount:{self.bbamount}\nBTN:{self.players[self.dealeridx].name}\nSB:{self.players[self.sbidx].name}\nBB:{self.players[self.bbidx].name}\n初期スタック{self.stack}\n人数制限:{self.maxplayers}\nコミュニティカード:{self.community}\nPOT:{self.pot}\n■プレイヤー情報\n{player_info}"
+      return f"■テーブル情報\nroomno:{self.roomno}\nround:{self.round}\nsb_amount:{self.sbamount}\nbb_amount:{self.bbamount}\nBTN:{self.players[self.dealeridx].username}\nSB:{self.players[self.sbidx].username}\nBB:{self.players[self.bbidx].username}\n最大ベット額{self.maxbet}\n初期スタック{self.stack}\n人数制限:{self.maxplayers}\nコミュニティカード:{self.community}\nPOT:{self.pot}\n■プレイヤー情報\n{player_info}"
 
    # テーブルにプレイヤーを追加する
    def add_player(self, player):
@@ -278,6 +322,7 @@ class Table:
    def pay_sbbb(self):
       self.players[self.sbidx].betting(self.sbamount)
       self.players[self.bbidx].betting(self.bbamount)
+      self.pot = self.sbamount + self.bbamount
 
    #　ハンドを配る
    def deal_hand(self):
@@ -336,11 +381,11 @@ class Table:
          if self.players[i].status == "Active":
             if cards_score(self.players[winneridx].hand + self.community)[1:] < cards_score(self.players[i].hand + self.community)[1:]:
                winneridx = i
-      print(f"{self.players[winneridx].name}の勝利!!!")
+      print(f"{self.players[winneridx].username}の勝利!!!")
    
 
 if __name__ == "__main__":
-   table = Table(50, 100, 10000, 6)
+   table = Table(50, 100, 10000, 6, "test")
    table.add_player(Player("一郎"))
    table.add_player(Player("二郎"))
    table.add_player(Player("三郎"))
