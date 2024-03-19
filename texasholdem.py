@@ -393,6 +393,16 @@ class Table:
             idx = i
             break
     return idx
+   
+   def search_nextplayeridx(self, actedplayeridx):
+      nextplayeridx = 0
+      idx = (actedplayeridx + 1) % len(self.players)
+      while True:
+         if self.players[nextplayeridx].status == "Active":
+            nextplayeridx = idx
+            break
+      return nextplayeridx
+
 
    
 

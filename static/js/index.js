@@ -1,6 +1,10 @@
 let socket = io();
 let mysessionid;
 let roomno;
+let checkcall;
+let betraiseallin;
+let callamount;
+let betamount;
 
 socket.on("messege", (msg) =>{
     console.log(msg);
@@ -408,7 +412,15 @@ socket.on("action", (data) => {
     $(".action-bar").css("display", "grid");
 })
 
-$("fold-btn").on("click", () =>{
-    $("action-bar").css("display", "none");
+$(".fold-btn").on("click", () =>{
+    $(".action-bar").css("display", "none");
     socket.emit("bettinground", {roomno:roomno, sessionid:mysessionid, action:"Fold"})
+})
+
+$(".callcheck-btn").on("click", ()=>{
+    $(".action-bar").css("display", "none");
+})
+
+$(".betraiseallin-btn").on("click", ()=>{
+    $(".action-bar").css("display", "none");
 })

@@ -95,10 +95,35 @@ def preflop(data):
 def bettinground(data):
     #部屋を検索
     rm = searchroom(data["roomno"])
-    #行動したプレイヤーのアクションを記録
+
+    #行動したプレイヤーのアクションを記録(各アクションの場合をすべてここで処理する)
     actedplayeridx = rm.search_actedplayeridx(data["sessionid"])
     rm.players[actedplayeridx].action = data["action"]
+    if(data["action"] == "Fold"):
+        pass
+    elif(data["action"] == "Check"):
+        pass
+    elif(data["action"] == "Call"):
+        pass 
+    elif(data["action"] == "Bet"):
+        pass
+    elif(data["action"] == "Raise"):
+        pass
+    elif(data["action"] == "Allin"):
+        pass
+
     #次に行動するプレイヤーを検索
+    nextplayeridx = rm.search_nextplayeridx(actedplayeridx)
+    nextplayer = rm.players[nextplayeridx].sessionid
+
+    reqcallamount = rm.maxbet - rm.players[nextplayeridx].bet
+    reqbetamount = rm.minimumraise - rm.players[nextplayeridx].bet
+
+    # json形式に書き換え
+    room = json.dumps(rm, default=Table_encoder)
+    players = json.dumps(rm.players, default=Player_encoder)
+
+    emit("action", {"room":room, "players":players, "reqcallamount":reqcallamount, "reqbetamount": reqbetamount}, room=nextplayer)
 
     
 
